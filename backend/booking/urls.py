@@ -19,5 +19,8 @@ from . import views
 
 urlpatterns = [
     path('bokning/', views.bokning),
-    path('klient/<int:klientId>/', views.klient)
+    path('bokning/<int:bokningId>/', views.getBokning),
+    path('klient/<int:klientId>/', views.klient),
+    path('login/', views.loginView),
+    path('logout/', views.logoutView)
 ]

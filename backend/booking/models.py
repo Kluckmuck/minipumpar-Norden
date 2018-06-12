@@ -1,7 +1,7 @@
 from django.db import models
 from django.utils import timezone
 from django.forms import ModelForm
-from django.core.exceptions import NON_FIELD_ERRORS
+from django.contrib.auth.models import User
 
 # Create your models here.
 class Klient(models.Model):
@@ -10,7 +10,7 @@ class Klient(models.Model):
     kontakt = models.CharField(max_length=124)
 
     def __str__(self):
-       return self.namn
+       return self.namn + " vid " + self.adress + ", " + self.kontakt
 
 class Bokning(models.Model):
     klient = models.ForeignKey('Klient', on_delete=models.CASCADE)
@@ -23,7 +23,7 @@ class Bokning(models.Model):
     betongKvalite = models.CharField(max_length=124, blank=True)
     bestalld = models.IntegerField(null=True, blank=True)
     pumpMng = models.IntegerField()
-    datum = models.DateField(default=timezone.now)
+    datum = models.DateField()
     littNr = models.IntegerField()
     arbNr = models.IntegerField(null=True, blank=True)
     resTid = models.IntegerField()

@@ -1,4 +1,6 @@
 from django.test import TestCase, Client
+from django.contrib.auth.models import User
+from django.views.decorators.csrf import ensure_csrf_cookie
 from ..models import Klient, Bokning
 import json
 
@@ -29,11 +31,23 @@ class BokningTestCase(TestCase):
             bestalld=None,
             arbNr=None,
             ovrigInfo='',
+            datum='2018-07-09',
             pumpStart='2018-07-09 13:13:13',
             pumpSlut='2018-07-09 13:13:13'
         )
+        korea = User.objects.create_user(username='Korea', password='Seoul')
 
         self.client = Client()
+
+    def test_auth(self):
+        response = self.client.post('/api/login/', json.dumps({'username': 'Korea', 'password': 'Seoul'}), content_type='application/json')
+        self.assertEqual(response.status_code, 200)
+
+        response = self.client.get('/api/logout/')
+        self.assertEqual(response.status_code, 200)
+
+        response = self.client.post('/api/login/', json.dumps({'username': 'Badder', 'password': 'Nabber'}), content_type='application/json')
+        self.assertEqual(response.status_code, 401)
 
     def test_getKlient(self):
         #Hämta Klient 1
@@ -46,7 +60,13 @@ class BokningTestCase(TestCase):
         response = self.client.get('/api/klient/99/')
         self.assertEqual(response.status_code, 404)
 
-    def test_postKlient(self):
+    def test_getBokning(self):
+        response = self.client.get('/api/bokning/1/')
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(Bokning.objects.get(id=1).pumpMng, 20)
+        self.assertEqual(Bokning.objects.get(id=1).arbNr, None)
+
+    def test_postBokning(self):
         #Posta minimal bokning
         response = self.client.post('/api/bokning/', json.dumps({
             'namn': 'Minipump AB',
