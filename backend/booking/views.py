@@ -3,7 +3,9 @@ from django.http import HttpResponse, HttpResponseNotAllowed, HttpResponseNotAll
 from django.forms.models import model_to_dict
 from django.utils import timezone
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_protect, requires_csrf_token
+from django.db import connection
 
 from .models import Klient, KlientForm, Bokning, BokningForm
 import json
@@ -30,6 +32,7 @@ def logoutView(request):
     else:
         return HttpResponseNotAllowed(['GET'])
 
+@login_required
 def bokning(request):
     if request.method == 'POST':
         klientForm = KlientForm(json.loads(request.body.decode()))
@@ -41,13 +44,16 @@ def bokning(request):
             bokning = bokningForm.save(commit=False)
             bokning.klient = klient
             bokning.save()
+            #print('bokningForm id: ' + str(bokning.id))
+            #print('Boknings id: ' + str(bokning.id))
+            #print('Klient id: ' + str(klient.id))
             return HttpResponse(status=201)
         else:
-            print(klientForm.errors.as_json())
             return HttpResponse(status=400)
     else:
         return HttpResponseNotAllowed(['POST'])
 
+@login_required
 def getBokning(request, bokningId):
     if request.method == 'GET':
         id = int(bokningId)
@@ -58,7 +64,8 @@ def getBokning(request, bokningId):
         return JsonResponse(model_to_dict(bokning))
     else:
         return HttpResponseNotAllowed(['GET'])
-
+        
+@login_required
 def klient(request, klientId):
     if request.method == 'GET':
         id = int(klientId)
