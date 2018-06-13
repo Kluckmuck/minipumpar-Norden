@@ -36,7 +36,8 @@ class BokningTestCase(TestCase):
             pumpStart='2018-07-09 13:13:13',
             pumpSlut='2018-07-09 13:13:13'
         )
-        korea = User.objects.create_user(username='Korea', password='Seoul')
+        User.objects.create_user(username='Korea', password='Seoul')
+        User.objects.create_user(username='Viktor', password='Max')
 
         self.client = Client()
 
@@ -56,6 +57,11 @@ class BokningTestCase(TestCase):
         response = self.client.get('/api/klient/1/')
         self.assertEqual(response.status_code, 302)
         response = self.client.post('/api/bokning/')
+
+    def test_passwordChange(self):
+        self.client.post('/api/login/', json.dumps({'username': 'Viktor', 'password': 'Max'}), content_type='application/json')
+        response = self.client.post('/api/change-password/')
+        self.assertEqual(response.status_code, 201)
 
     def test_getKlient(self):
         login_auth(self) #Login för @login_required

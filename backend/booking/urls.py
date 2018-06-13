@@ -15,6 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from django.contrib.auth import views as auth_views
 from . import views
 
 urlpatterns = [
@@ -22,5 +23,6 @@ urlpatterns = [
     path('bokning/<int:bokningId>/', views.getBokning),
     path('klient/<int:klientId>/', views.klient),
     path('login/', views.loginView),
-    path('logout/', views.logoutView)
+    path('logout/', views.logoutView),
+    path('change-password/', auth_views.PasswordChangeView.as_view())
 ]
