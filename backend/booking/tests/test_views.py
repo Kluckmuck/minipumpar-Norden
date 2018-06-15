@@ -61,7 +61,7 @@ class BokningTestCase(TestCase):
     def test_passwordChange(self):
         self.client.post('/api/login/', json.dumps({'username': 'Viktor', 'password': 'Max'}), content_type='application/json')
         response = self.client.post('/api/change-password/')
-        self.assertEqual(response.status_code, 201)
+        self.assertEqual(response.status_code, 200)
 
     def test_getKlient(self):
         login_auth(self) #Login för @login_required
@@ -110,13 +110,13 @@ class BokningTestCase(TestCase):
             'namn': 'Bygga AB ',
             'adress':'Betonggatan 24',
             'kontakt' :'Erik Betongsson',
-            'pumpMng': '123',
-            'littNr': '3144',
-            'resTid': '4',
-            'grundavgift' : '1500',
-            'datum' : '2018-06-11',
-            'pumpStart' : '2018-06-11 13:13:21',
-            'pumpSlut' : '2018-06-11 13:13:21'
+            'pumpMng': '1233',
+            'littNr': '3142',
+            'resTid': '5',
+            'grundavgift' : '1250',
+            'datum' : '2018-06-12',
+            'pumpStart' : '2018-06-12 14:13:21',
+            'pumpSlut' : '2018-06-12 10:13:21'
         }), content_type='application/json')
 
         self.assertEqual(response.status_code, 201)

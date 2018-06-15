@@ -6,6 +6,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_protect, requires_csrf_token
 from django.db import connection
+from reportlab.pdfgen import canvas
 
 from .models import Klient, KlientForm, Bokning, BokningForm
 import json
@@ -64,7 +65,7 @@ def getBokning(request, bokningId):
         return JsonResponse(model_to_dict(bokning))
     else:
         return HttpResponseNotAllowed(['GET'])
-        
+
 @login_required
 def klient(request, klientId):
     if request.method == 'GET':
