@@ -15,7 +15,7 @@ class Klient(models.Model):
 class Bokning(models.Model):
     klient = models.ForeignKey('Klient', on_delete=models.CASCADE)
     referens = models.IntegerField(null=True, blank=True)
-    pumpStr = models.IntegerField(null=True, blank=True)
+    pumpStr = models.IntegerField(null=True, blank=True, verbose_name='pump storlek:')
     slangStr = models.IntegerField(null=True, blank=True)
     pump = models.IntegerField(null=True, blank=True)
     maskinist = models.CharField(max_length=124, blank=True)
