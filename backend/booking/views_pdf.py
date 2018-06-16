@@ -1,4 +1,5 @@
 from django.http import HttpResponse, HttpResponseNotAllowed, HttpResponseNotFound
+from django.contrib.auth.decorators import login_required
 from reportlab.pdfgen import canvas
 
 from .models import Bokning
@@ -27,19 +28,23 @@ def drawFields(c, bokning):
         y = y - 25
 
 # Create your views here.
+@login_required
+def mailBokning(request, bokningId, recipient):
+    if request.method == 'GET':
+        id = int(bokningId)
+        r = str(recipient)
+        try:
+            bokning = Bokning.objects.get(id=id)
+        except Bokning.DoesNotExist:
+            return HttpResponseNotFound()
+        return HttpResponse(status=200)
+
+@login_required
 def createPdf(request, bokningId):
     if request.method == 'GET':
         id = int(bokningId)
         try:
             bokning = Bokning.objects.get(id=id)
-            #fields = [f.name for f in bokning._meta.get_fields()]
-            #for i,n in enumerate(fields):
-                #if bokning.name != None
-                #Print name of field
-                #print(fields[i])
-
-                #Print value of that field
-                #print(getattr(bokning,fields[i]))
         except Bokning.DoesNotExist:
             return HttpResponseNotFound()
         # Create the HttpResponse object with the appropriate PDF headers.

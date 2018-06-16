@@ -1,5 +1,6 @@
 from django.test import TestCase, Client
 from ..models import Klient, Bokning
+from django.contrib.auth.models import User
 import json
 
 # Create your tests here.
@@ -33,7 +34,7 @@ class PdfTestCase(TestCase):
             pumpStart='2018-07-09 13:13:13',
             pumpSlut='2018-07-09 13:13:13'
         )
-
+        User.objects.create_user(username='Korea', password='Seoul')
         self.client = Client()
 
     def test_pdfBokning(self):
