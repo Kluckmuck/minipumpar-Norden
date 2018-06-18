@@ -36,7 +36,8 @@ def logoutView(request):
 @login_required
 def bokning(request):
     if request.method == 'POST':
-        klientForm = KlientForm(json.loads(request.body.decode()))
+        klientForm = KlientForm(request.POST)
+        #klientForm = KlientForm(json.loads(request.body.decode()))
         bokningForm = BokningForm(json.loads(request.body.decode()))
         #Validera data.
         if klientForm.is_valid() and bokningForm.is_valid():
