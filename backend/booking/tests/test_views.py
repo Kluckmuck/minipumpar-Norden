@@ -98,15 +98,7 @@ class BokningTestCase(TestCase):
             'pumpSlut' : '2018-06-11 13:13:21'
         }), content_type='application/json')
 
-        self.assertEqual(response.status_code, 201)
-        self.assertEqual(Klient.objects.get(id=2).namn, 'Minipump AB')
-        self.assertEqual(Bokning.objects.get(id=2).pumpMng, 13)
-        self.assertEqual(Bokning.objects.get(id=2).arbNr, None)
-
-    def test_postBokningOldKlient(self):
-        login_auth(self) #Login för @login_required
-        #Posta minimal bokning, med en befintlig Klient
-        response = self.client.post('/api/bokning/', json.dumps({
+        response2 = self.client.post('/api/bokning/', json.dumps({
             'namn': 'Bygga AB ',
             'adress':'Betonggatan 24',
             'kontakt' :'Erik Betongsson',
@@ -120,16 +112,27 @@ class BokningTestCase(TestCase):
         }), content_type='application/json')
 
         self.assertEqual(response.status_code, 201)
+        self.assertEqual(response2.status_code, 201)
+        #self.assertEqual(response.status_code, 404)
+
+        self.assertEqual(Klient.objects.get(id=1).namn, 'Bygga AB')
+        self.assertEqual(Klient.objects.get(id=2).namn, 'Minipump AB')
+        self.assertEqual(Klient.objects.get(id=3).namn, 'Bygga AB') #TEST!! I framtiden ska inte denna skapas
+
         #Bokning 2 ska ej modifieras
+        self.assertEqual(Bokning.objects.get(id=2).resTid, 4)
         self.assertEqual(Bokning.objects.get(id=2).pumpMng, 13)
-        self.assertEqual(Bokning.objects.get(id=2).arbNr, None)
+
         #Bokning 3
-        self.assertEqual(Bokning.objects.get(id=3).pumpMng, 123)
+        self.assertEqual(Bokning.objects.get(id=3).pumpMng, 1233)
         self.assertEqual(Bokning.objects.get(id=3).arbNr, None)
+
+        self.assertEqual(response.status_code, 201)
+        self.assertEqual(Bokning.objects.get(id=2).arbNr, None)
 
         #Testar att klient 3 inte existerar
         response = self.client.get('/api/klient/3/')
         self.assertEqual(response.status_code, 404)
-
+        
 def login_auth(self):
     self.client.post('/api/login/', json.dumps({'username': 'Korea', 'password': 'Seoul'}), content_type='application/json')

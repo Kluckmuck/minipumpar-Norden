@@ -36,12 +36,14 @@ def logoutView(request):
 @login_required
 def bokning(request):
     if request.method == 'POST':
-        klientForm = KlientForm(request.POST)
-        #klientForm = KlientForm(json.loads(request.body.decode()))
+        klientForm = KlientForm(json.loads(request.body.decode()))
         bokningForm = BokningForm(json.loads(request.body.decode()))
         #Validera data.
         if klientForm.is_valid() and bokningForm.is_valid():
             #Skriv till db.
+            print(json.loads(request.body.decode())['namn'])
+            if Klient.objects.get(namn=json.loads(request.body.decode())['namn']).exists():
+                print('finns i DATABASEN')
             klient = klientForm.save()
             bokning = bokningForm.save(commit=False)
             bokning.klient = klient
