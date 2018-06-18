@@ -1,8 +1,10 @@
 from django.http import HttpResponse, HttpResponseNotAllowed, HttpResponseNotFound
 from django.contrib.auth.decorators import login_required
+from django.core.mail import EmailMessage, BadHeaderError
 from reportlab.pdfgen import canvas
 
 from .models import Bokning
+import json
 
 x = 75
 y = 800
@@ -56,22 +58,31 @@ def drawFields(c, bokning):
 @login_required
 def mailBokning(request):
     if request.method == 'POST':
-        bokning = request.POST.get('bokning', '')
-        recipient = request.POST.get('recipient', '')
-        from_email = request.POST.get('user', '')
-        if subject and recipient and from_email:
+        bokning = json.loads(request.body.decode())['bokning']
+        recipient = json.loads(request.body.decode())['recipient']
+        sender = json.loads(request.body.decode())['sender']
+        if bokning and recipient and sender:
             try:
-                bokning = Bokning.objects.get(id=id)
+                bokning = Bokning.objects.get(id=bokning)
             except Bokning.DoesNotExist:
                 return HttpResponseNotFound()
             createPdf(bokning)
             try:
-                send_mail('subject', 'message', from_email, [recipient])
+                email = EmailMessage(
+                    subject='subject',
+                    body='message',
+                    from_email= sender,
+                    to=[recipient]
+                )
+                email.attach_file('bookning.pdf')
+                email.send(fail_silently=False)
             except BadHeaderError:
                 return HttpResponse('Invalid header found.')
             return HttpResponse(status=200)
+        else:
+            return HttpResponse('Make sure all fields are entered and valid.')
     else:
-        return HttpResponse('Make sure all fields are entered and valid.')
+        return HttpResponseNotAllowed(['POST'])
 
 @login_required
 def createLocalPdfView(request, bokningId):

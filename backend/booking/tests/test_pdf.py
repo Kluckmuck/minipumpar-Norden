@@ -1,6 +1,8 @@
 from django.test import TestCase, Client
-from ..models import Klient, Bokning
 from django.contrib.auth.models import User
+from django.core import mail
+
+from ..models import Klient, Bokning
 import json
 
 # Create your tests here.
@@ -36,6 +38,25 @@ class PdfTestCase(TestCase):
         )
         User.objects.create_user(username='Korea', password='Seoul')
         self.client = Client()
+
+    def test_send_email(self):
+        login_auth(self) #Login för @login_required
+        # Send message.
+        response = self.client.post('/api/mail/', json.dumps({'bokning': '1', 'recipient': 'kluckmucki@gmail.com', 'sender': 'max.jourdanis@gmail.com'}), content_type='application/json')
+
+        self.assertEqual(response.status_code, 200)
+        # Test that one message has been sent.
+        self.assertEqual(len(mail.outbox), 1)
+
+        # Verify that the subject of the first message is correct.
+        self.assertEqual(mail.outbox[0].subject, 'subject')
+        # Veryfy attachment
+        self.assertEqual(mail.outbox[0].attachments[0,0], 'bookning.pdf')
+
+        response = self.client.post('/api/mail/', json.dumps({'bokning': '1', 'user': 'max.jourdanis@gmail.com'}), content_type='application/json')
+        self.assertEqual(response.status_code, 404)
+        response = self.client.post('/api/mail/', json.dumps({'bokning': '1', 'recipient': '', 'user': 'max.jourdanis@gmail.com'}), content_type='application/json')
+        self.assertEqual(response.status_code, 404)
 
     def test_pdfBokning(self):
         login_auth(self) #Login för @login_required

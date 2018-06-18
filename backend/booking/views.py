@@ -4,7 +4,7 @@ from django.forms.models import model_to_dict
 from django.utils import timezone
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-from django.views.decorators.csrf import csrf_protect, requires_csrf_token
+from django.views.decorators.csrf import ensure_csrf_cookie
 from django.db import connection
 from reportlab.pdfgen import canvas
 
@@ -41,9 +41,9 @@ def bokning(request):
         #Validera data.
         if klientForm.is_valid() and bokningForm.is_valid():
             #Skriv till db.
-            print(json.loads(request.body.decode())['namn'])
-            if Klient.objects.get(namn=json.loads(request.body.decode())['namn']).exists():
-                print('finns i DATABASEN')
+            # Se om en instans av Klient finns i DB
+            #if Klient.objects.get(namn=json.loads(request.body.decode())['namn']).exists():
+                #print('finns i DATABASEN')
             klient = klientForm.save()
             bokning = bokningForm.save(commit=False)
             bokning.klient = klient

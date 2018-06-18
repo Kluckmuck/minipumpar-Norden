@@ -33,7 +33,7 @@ class Bokning(models.Model):
     ovrigInfo = models.CharField(max_length=124, blank=True)
 
     def __str__(self):
-       return self.klient.namn + " vid " + self.klient.adress + ", " + self.datum
+       return self.klient.namn + " vid " + self.klient.adress + ", " + str(self.datum)
 
 class KlientForm(ModelForm):
     class Meta:
