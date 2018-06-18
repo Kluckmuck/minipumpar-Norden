@@ -1,3 +1,8 @@
 from django.contrib import admin
+from .models import Klient, Bokning
 
-# Register your models here.
+
+admin.site.register(Klient)
+admin.site.register(Bokning)
+
+
