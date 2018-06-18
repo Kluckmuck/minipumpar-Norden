@@ -26,5 +26,6 @@ urlpatterns = [
     path('logout/', views.logoutView),
     path('change-password/', auth_views.PasswordChangeView.as_view()),
     path('pdf/bokning/<int:bokningId>/', views_pdf.createLocalPdfView),
-    path('mail/', views_pdf.mailBokning)
+    path('mail/', views_pdf.mailBokning),
+    path('token/', views.token)
 ]

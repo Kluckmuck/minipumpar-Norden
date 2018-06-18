@@ -80,3 +80,10 @@ def klient(request, klientId):
         return JsonResponse(model_to_dict(klient))
     else:
         return HttpResponseNotAllowed(['GET'])
+
+@ensure_csrf_cookie
+def token(request):
+    if request.method == 'GET':
+        return HttpResponse(status=204)
+    else:
+        return HttpResponseNotAllowed(['GET'])

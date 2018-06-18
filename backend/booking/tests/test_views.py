@@ -122,17 +122,16 @@ class BokningTestCase(TestCase):
         #Bokning 2 ska ej modifieras
         self.assertEqual(Bokning.objects.get(id=2).resTid, 4)
         self.assertEqual(Bokning.objects.get(id=2).pumpMng, 13)
+        self.assertEqual(Bokning.objects.get(id=2).arbNr, None)
 
         #Bokning 3
         self.assertEqual(Bokning.objects.get(id=3).pumpMng, 1233)
         self.assertEqual(Bokning.objects.get(id=3).arbNr, None)
 
-        self.assertEqual(response.status_code, 201)
-        self.assertEqual(Bokning.objects.get(id=2).arbNr, None)
 
         #Testar att klient 3 inte existerar
         response = self.client.get('/api/klient/3/')
         self.assertEqual(response.status_code, 404)
-        
+
 def login_auth(self):
     self.client.post('/api/login/', json.dumps({'username': 'Korea', 'password': 'Seoul'}), content_type='application/json')
