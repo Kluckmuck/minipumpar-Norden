@@ -58,9 +58,12 @@ def drawFields(c, bokning):
 @login_required
 def mailBokning(request):
     if request.method == 'POST':
-        bokning = json.loads(request.body.decode())['bokning']
-        recipient = json.loads(request.body.decode())['recipient']
-        sender = json.loads(request.body.decode())['sender']
+        try:
+            bokning = json.loads(request.body.decode())['bokning']
+            recipient = json.loads(request.body.decode())['recipient']
+            sender = json.loads(request.body.decode())['sender']
+        except KeyError:
+            return HttpResponse(status=400)
         if bokning and recipient and sender:
             try:
                 bokning = Bokning.objects.get(id=bokning)
@@ -80,7 +83,7 @@ def mailBokning(request):
                 return HttpResponse('Invalid header found.')
             return HttpResponse(status=200)
         else:
-            return HttpResponse('Make sure all fields are entered and valid.')
+            return HttpResponse(status=400)
     else:
         return HttpResponseNotAllowed(['POST'])
 

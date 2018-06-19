@@ -51,12 +51,14 @@ class PdfTestCase(TestCase):
         # Verify that the subject of the first message is correct.
         self.assertEqual(mail.outbox[0].subject, 'subject')
         # Veryfy attachment
-        self.assertEqual(mail.outbox[0].attachments[0,0], 'bookning.pdf')
+        self.assertEqual(mail.outbox[0].attachments[0][0], 'bookning.pdf')
 
+        # POST without recipient field
         response = self.client.post('/api/mail/', json.dumps({'bokning': '1', 'user': 'max.jourdanis@gmail.com'}), content_type='application/json')
-        self.assertEqual(response.status_code, 404)
+        self.assertEqual(response.status_code, 400)
+        # POST with blank recipient
         response = self.client.post('/api/mail/', json.dumps({'bokning': '1', 'recipient': '', 'user': 'max.jourdanis@gmail.com'}), content_type='application/json')
-        self.assertEqual(response.status_code, 404)
+        self.assertEqual(response.status_code, 400)
 
     def test_pdfBokning(self):
         login_auth(self) #Login för @login_required
