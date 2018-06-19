@@ -82,6 +82,11 @@ class BokningTestCase(TestCase):
         self.assertEqual(Bokning.objects.get(id=1).pumpMng, 20)
         self.assertEqual(Bokning.objects.get(id=1).arbNr, None)
 
+        # Icke existerande bokning
+        response = self.client.get('/api/bokning/123/')
+        self.assertEqual(response.status_code, 404)
+
+
     def test_postBokning(self):
         login_auth(self) #Login för @login_required
         #Posta minimal bokning
@@ -99,7 +104,7 @@ class BokningTestCase(TestCase):
         }), content_type='application/json')
 
         response2 = self.client.post('/api/bokning/', json.dumps({
-            'namn': 'Bygga AB ',
+            'namn': 'Bygga AB',
             'adress':'Betonggatan 24',
             'kontakt' :'Erik Betongsson',
             'pumpMng': '1233',
@@ -117,7 +122,6 @@ class BokningTestCase(TestCase):
 
         self.assertEqual(Klient.objects.get(id=1).namn, 'Bygga AB')
         self.assertEqual(Klient.objects.get(id=2).namn, 'Minipump AB')
-        self.assertEqual(Klient.objects.get(id=3).namn, 'Bygga AB') #TEST!! I framtiden ska inte denna skapas
 
         #Bokning 2 ska ej modifieras
         self.assertEqual(Bokning.objects.get(id=2).resTid, 4)

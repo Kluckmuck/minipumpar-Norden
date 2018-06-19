@@ -9,6 +9,8 @@ import json
 x = 75
 y = 800
 size = 12
+lineHeight = 25
+lineWidth = 145
 
 def createPdf(bokning, response=None):
     if (response != None):
@@ -44,6 +46,7 @@ def drawFields(c, bokning):
         #Draws each field name in bold text & capitalizes the first letter
         c.setFont("Courier-Bold", size)
         c.drawString(x,y,fields[i].title())
+        if fields[i] is
         #Draws each field value to the right of field name
         c.setFont("Courier", size)
         value = str(getattr(bokning,fields[i]))
@@ -51,8 +54,8 @@ def drawFields(c, bokning):
             #If the field value is None, dont draw
             pass
         else:
-            c.drawString(x+145,y, value)
-        y = y - 25
+            c.drawString(x+lineWidth,y, value)
+        y = y - lineHeight
 
 # Create your views here.
 @login_required

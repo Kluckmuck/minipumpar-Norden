@@ -41,10 +41,13 @@ def bokning(request):
         #Validera data.
         if klientForm.is_valid() and bokningForm.is_valid():
             #Skriv till db.
+            namn = json.loads(request.body.decode())['namn'].strip()
             # Se om en instans av Klient finns i DB
-            #if Klient.objects.get(namn=json.loads(request.body.decode())['namn']).exists():
-                #print('finns i DATABASEN')
-            klient = klientForm.save()
+            query = Klient.objects.filter(namn=namn)
+            if query.exists():
+                klient = Klient.objects.get(namn=namn)
+            else:
+                klient = klientForm.save()
             bokning = bokningForm.save(commit=False)
             bokning.klient = klient
             bokning.save()
