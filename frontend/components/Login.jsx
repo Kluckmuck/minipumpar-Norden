@@ -2,27 +2,25 @@ import React, { Component } from "react";
 import { Button, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
 import "./Login.css";
 
-var siteURL = 'http://cities.jonkri.se/';
+var siteURL = 'http://127.0.0.1:8000';
 var email = 'max@gmail.com';
 export default class Login extends Component{
   constructor(props) {
     super(props);
     
     this.state = {
-      email: "max@gmail.com",
-      password: ""
+      email: "test@test.se",
+      password: "test123123"
     };
   }
 
-  validateForm() {
+  validateForm () {
     return this.state.email.length > 0 && this.state.password.length > 0;
   }
  
-  handleChange (event) {
-    this.setState({
-      [event.target.id]: event.target.value
-    });  
-  }
+  handleChange(e){
+    this.setState({[e.target.id]: e.target.value});
+ }
 
   handleSubmit(event) {
     event.preventDefault();
@@ -33,21 +31,23 @@ export default class Login extends Component{
       console.log("false")
     )
     console.log(event.preventDefault);
-    fetch(siteURL , {
-      method:  'POST',
+    fetch(siteURL + '/api/login/' , {
+      method:  'post',
       headers: {
-        'Accept': 'application/json',
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Headers':'origin, content-type, accept',
+        "Access-Control-Allow-Methods": "POST, GET, OPTIONS, DELETE, PUT",
+
         'Content-Type': 'application/json',
-      },
+        'Accept': 'application/json',                  
+        
+    },
+
       body:JSON.stringify({
-        name: this.state.email,
-        population: this.state.password
+        username: this.state.email,
+        password: this.state.password
       })
-      // .then((response) =>{
-      //   console.log(response.json());
-      //     return response.json();
-      // })
-    });
+    }).then(response => response.json(),);
   }
   render() {
     return (

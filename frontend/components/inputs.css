@@ -1,0 +1,18 @@
+@media all and (min-width: 480px) {
+    .Inputs {
+      padding: 60px 0;
+    }
+  
+    .Inputs form {
+      margin: 0 auto;
+      max-width: 320px;
+    }
+  
+    .Inputs h1 {
+      margin: 50px auto;
+      padding: 80 px;
+      max-width: 320px;
+    }
+  
+    
+  }
