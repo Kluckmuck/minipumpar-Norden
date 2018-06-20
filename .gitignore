@@ -5,6 +5,7 @@ bower_component
 src/config/configSec.js
 *.pdf
 htmlcov/
+__pycache__
 
 .DS_STORE
 node_modules
