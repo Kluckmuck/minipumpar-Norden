@@ -46,7 +46,8 @@ def drawFields(c, bokning):
         #Draws each field name in bold text & capitalizes the first letter
         c.setFont("Courier-Bold", size)
         c.drawString(x,y,fields[i].title())
-        if fields[i] is
+        #Draw total time draw
+        #if fields[i] is
         #Draws each field value to the right of field name
         c.setFont("Courier", size)
         value = str(getattr(bokning,fields[i]))
