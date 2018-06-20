@@ -2,6 +2,7 @@ from django.db import models
 from django.utils import timezone
 from django.forms import ModelForm
 from django.contrib.auth.models import User
+from django import forms
 
 # Create your models here.
 class Klient(models.Model):
@@ -15,7 +16,7 @@ class Klient(models.Model):
 class Bokning(models.Model):
     klient = models.ForeignKey('Klient', on_delete=models.CASCADE)
     slangStr = models.IntegerField(null=True, blank=True)
-    maskinist = models.CharField(max_length=124, blank=True)
+    maskinist = models.ForeignKey(User, on_delete=models.CASCADE)
     pumpMng = models.IntegerField()
     datum = models.DateField()
     littNr = models.CharField(max_length=124)
@@ -38,7 +39,6 @@ class BokningForm(ModelForm):
         model = Bokning
         fields = [
             'slangStr',
-            'maskinist',
             'pumpMng',
             'datum',
             'littNr',
