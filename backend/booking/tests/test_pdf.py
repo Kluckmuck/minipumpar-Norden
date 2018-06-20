@@ -16,27 +16,21 @@ import json
 class PdfTestCase(TestCase):
     def setUp(self):
         klient = Klient.objects.create(namn='Bygga AB', adress='Betonggatan 24', kontakt='Erik Betongsson')
+        user = User.objects.create_user(username='Korea', password='Seoul', email='bibimbap@gmail.com')
         bokning = Bokning.objects.create(
             klient=klient,
             pumpMng='20',
             littNr='1234',
             resTid='2',
             grundavgift='1000',
-            referens=None,
-            pumpStr=None,
             slangStr=None,
-            pump=None,
-            maskinist='',
-            betongLev='',
-            betongKvalite='',
-            bestalld=None,
-            arbNr=None,
+            maskinist=user,
             ovrigInfo='',
             datum='2018-07-09',
-            pumpStart='2018-07-09 13:13:13',
-            pumpSlut='2018-07-09 13:13:13'
+            pumpStart='2018-07-09 13:00:13',
+            pumpSlut='2018-07-09 14:15:13'
         )
-        User.objects.create_user(username='Korea', password='Seoul')
+
         self.client = Client()
 
     def test_send_email(self):

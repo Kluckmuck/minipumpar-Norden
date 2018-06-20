@@ -4,13 +4,16 @@ from django.core.mail import EmailMessage, BadHeaderError
 from reportlab.pdfgen import canvas
 
 from .models import Bokning
+from datetime import datetime
 import json
 
 x = 75
-y = 800
+y = 1000
 size = 12
 lineHeight = 25
 lineWidth = 145
+font = 'Helvetica'
+fontBold = 'Helvetica-Bold'
 
 def createPdf(bokning, response=None):
     if (response != None):
@@ -23,7 +26,7 @@ def createPdf(bokning, response=None):
     else :
         c = canvas.Canvas("bookning.pdf")
     #Font
-    c.setFont("Courier", 12)
+    c.setFont(font, 12)
     drawHeader(c)
     drawFields(c, bokning)
 
@@ -37,6 +40,18 @@ def drawHeader(c):
     c.drawString(x,y, "Telefon: 070-557 66 38 - info@minipumpar - orgnr 556851-2809")
     y = y - 40
 
+def getHourMinute(time):
+    #Appends zero if minute is 0-9
+    minute = str(time.minute)
+    if len(minute) is 1:
+        minute = '0' + minute
+    time = str(time.hour) + ':' + minute
+    return time
+
+def drawValue(c,string):
+    c.setFont(font, size)
+    c.drawString(x+lineWidth,y,string)
+
 def drawFields(c, bokning):
     #Body of PDF
     global x,y
@@ -44,18 +59,27 @@ def drawFields(c, bokning):
     fields = [f.name for f in bokning._meta.get_fields()]
     for i,n in enumerate(fields):
         #Draws each field name in bold text & capitalizes the first letter
-        c.setFont("Courier-Bold", size)
+        c.setFont(fontBold, size)
         c.drawString(x,y,fields[i].title())
+        if fields[i] is 'pumpStart':
+            drawValue(c,getHourMinute(getattr(bokning,fields[i])))
+        elif fields[i] is 'pumpSlut':
+            drawValue(c,getHourMinute(getattr(bokning,fields[i])))
         #Draw total time draw
-        #if fields[i] is
+        elif fields[i] is 'ovrigInfo':
+            y = y - lineHeight
+            c.drawString(x,y, 'Total tid')
+            startTime = getattr(bokning,fields[i-2])
+            endTime = getattr(bokning,fields[i-1])
+            drawValue(c,str(endTime-startTime)[:-3])
         #Draws each field value to the right of field name
-        c.setFont("Courier", size)
-        value = str(getattr(bokning,fields[i]))
-        if (value == "None"):
-            #If the field value is None, dont draw
-            pass
         else:
-            c.drawString(x+lineWidth,y, value)
+            value = str(getattr(bokning,fields[i]))
+            if (value == "None"):
+                #If the field value is None, dont draw
+                pass
+            else:
+                drawValue(c,value)
         y = y - lineHeight
 
 # Create your views here.
