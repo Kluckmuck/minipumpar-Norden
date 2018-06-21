@@ -34,6 +34,9 @@ class BokningTestCase(TestCase):
 
         self.client = Client()
 
+    def test_postgres(self):
+        self.assertEqual(Klient.objects.get(id=1).namn, 'Bygga AB')
+
     def test_auth(self):
         response = self.client.post('/api/login/', json.dumps({'username': 'Korea', 'password': 'Seoul'}), content_type='application/json')
         self.assertEqual(response.status_code, 200)
