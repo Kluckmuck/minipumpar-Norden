@@ -14,7 +14,8 @@ import json
 ## 405 (Method not allowed) : Requested URL does not allow the method of the request.
 
 class PdfTestCase(TestCase):
-    def setUp(self):
+    @classmethod
+    def setUpTestData(cls):
         klient = Klient.objects.create(namn='Bygga AB', adress='Betonggatan 24', kontakt='Erik Betongsson')
         user = User.objects.create_user(username='Korea', password='Seoul', email='bibimbap@gmail.com')
         bokning = Bokning.objects.create(
@@ -31,7 +32,7 @@ class PdfTestCase(TestCase):
             pumpSlut='2018-07-09 14:15:13'
         )
 
-        self.client = Client()
+        cls.client = Client()
 
     def test_send_email(self):
         login_auth(self) #Login för @login_required

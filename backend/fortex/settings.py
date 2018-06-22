@@ -78,7 +78,7 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'minipumpar',
-        'USER': 'algituser',
+        'USER': 'algit',
         'PASSWORD': 'gundla123',
         'HOST': 'localhost',
         'PORT': '',
