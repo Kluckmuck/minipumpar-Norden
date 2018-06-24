@@ -8,7 +8,7 @@ from datetime import datetime
 import json
 
 x = 75
-y = 1000
+y = 1125
 size = 12
 lineHeight = 25
 lineWidth = 145
@@ -24,21 +24,30 @@ def createPdf(bokning, response=None):
         # Create the PDF object, using the response object as its "file."
         c = canvas.Canvas(response)
     else :
-        c = canvas.Canvas("bookning.pdf")
+        filePath = "pdf/" + str(bokning.datum) + "(" + str(bokning.id) + ").pdf"
+        c = canvas.Canvas(filePath)
     #Font
     c.setFont(font, 12)
     drawHeader(c)
     drawFields(c, bokning)
+    drawFooter(c)
 
     # Close the PDF object cleanly, and we're done.
     c.showPage()
     c.save()
+    return filePath
 
 def drawHeader(c):
     #Header for PDF
     global x,y
     c.drawString(x,y, "Telefon: 070-557 66 38 - info@minipumpar - orgnr 556851-2809")
     y = y - 40
+
+def drawFooter(c):
+    #Footer for PDF
+    global x
+    c.setFont("Helvetica-Oblique", size)
+    c.drawString(x,20, "Utvecklad av Älg IT Handelsbolag, 0706566805")
 
 def getHourMinute(time):
     #Appends zero if minute is 0-9
@@ -97,7 +106,7 @@ def mailBokning(request):
                 bokning = Bokning.objects.get(id=bokning)
             except Bokning.DoesNotExist:
                 return HttpResponseNotFound()
-            createPdf(bokning)
+            filePath = createPdf(bokning)
             try:
                 email = EmailMessage(
                     subject='subject',
@@ -105,7 +114,7 @@ def mailBokning(request):
                     from_email= sender,
                     to=[recipient]
                 )
-                email.attach_file('bookning.pdf')
+                email.attach_file(filePath)
                 email.send(fail_silently=False)
             except BadHeaderError:
                 return HttpResponse('Invalid header found.')
