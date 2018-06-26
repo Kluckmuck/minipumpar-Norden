@@ -77,11 +77,10 @@ WSGI_APPLICATION = 'fortex.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'minipumpar',
-        'USER': 'algit',
-        'PASSWORD': 'gundla123',
-        'HOST': 'localhost',
-        'PORT': '',
+        'NAME': 'postgres',
+        'USER': 'postgres',
+        'HOST': 'db',
+        'PORT': '5432',
     }
 }
 
