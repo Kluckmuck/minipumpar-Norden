@@ -1,7 +1,10 @@
 import React from "react";
-// import input from 'react-bootstrap/lib/input';
 import { Button, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
-import "./inputs.css"
+import App from './App.jsx'
+import "./css/inputs.css"
+
+
+var site  = 'http://cities.jonkri.se'
 class Input extends React.Component {
   constructor(props){
     super(props);
@@ -53,6 +56,7 @@ class Input extends React.Component {
     return(
     <div className="Inputs">
     <h1>Minipumpar</h1>
+    <App/>
       <form onSubmit = {this.handleSubmit.bind(this)}>
         <FormGroup controlId="name" bsSize="large">
           <ControlLabel>Namn:</ControlLabel>
@@ -147,5 +151,5 @@ class Input extends React.Component {
   }
 }
 
-module.exports ={ Input:Input };
+export default  Input;
 

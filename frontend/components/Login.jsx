@@ -1,10 +1,9 @@
 import React, { Component } from "react";
 import { Button, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
-import "./Login.css";
+import "./css/Login.css";
+import { withRouter } from "react-router-dom";
 
-var siteURL = 'http://127.0.0.1:8000';
-var email = 'max@gmail.com';
-export default class Login extends Component{
+ class Login extends Component{
   constructor(props) {
     super(props);
     
@@ -13,6 +12,7 @@ export default class Login extends Component{
       password: "test123123"
     };
   }
+
 
   validateForm () {
     return this.state.email.length > 0 && this.state.password.length > 0;
@@ -24,30 +24,8 @@ export default class Login extends Component{
 
   handleSubmit(event) {
     event.preventDefault();
-    console.log(this.state.email)
-    if(this.state.email === email){
-      console.log("correct")
-    }else(
-      console.log("false")
-    )
-    console.log(event.preventDefault);
-    fetch(siteURL + '/api/login/' , {
-      method:  'post',
-      headers: {
-        'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Headers':'origin, content-type, accept',
-        "Access-Control-Allow-Methods": "POST, GET, OPTIONS, DELETE, PUT",
-
-        'Content-Type': 'application/json',
-        'Accept': 'application/json',                  
-        
-    },
-
-      body:JSON.stringify({
-        username: this.state.email,
-        password: this.state.password
-      })
-    }).then(response => response.json(),);
+    this.props.history.push('/inputs')
+    console.log('Hello')
   }
   render() {
     return (
@@ -85,4 +63,6 @@ export default class Login extends Component{
 }
 
 }
+
+export default withRouter(Login);
 

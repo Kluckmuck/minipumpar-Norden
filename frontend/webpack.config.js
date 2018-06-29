@@ -8,7 +8,7 @@ module.exports = {
       query: {
         presets: ['env']
       },
-      test: /\.js$/
+      test: /\.jsx$/
     }, 
     {
       test: /\.css$/,
