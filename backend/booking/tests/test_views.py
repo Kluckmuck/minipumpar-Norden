@@ -13,9 +13,10 @@ import json
 ## 405 (Method not allowed) : Requested URL does not allow the method of the request.
 
 class BokningTestCase(TestCase):
-
-    def setUp(self):
+    @classmethod
+    def setUpTestData(cls):
         klient = Klient.objects.create(namn='Bygga AB', adress='Betonggatan 24', kontakt='Erik Betongsson')
+        klient.save()
         user = User.objects.create_user(username='Korea', password='Seoul', email='bibimbap@gmail.com')
         User.objects.create_user(username='Viktor', password='Max')
         bokning = Bokning.objects.create(
@@ -32,7 +33,7 @@ class BokningTestCase(TestCase):
             pumpSlut='2018-07-09 13:13:13'
         )
 
-        self.client = Client()
+        cls.client = Client()
 
     def test_auth(self):
         response = self.client.post('/api/login/', json.dumps({'username': 'Korea', 'password': 'Seoul'}), content_type='application/json')
