@@ -11,9 +11,6 @@ services:
       - ./code/nginx:/etc/nginx/conf.d
     depends_on:
       - web
-  db:
-    image: postgres
-    container_name: ps01
   web:
     build: .
     command: python3 manage.py runserver 0.0.0.0:8000
@@ -23,3 +20,6 @@ services:
       - "8000"
     depends_on:
       - db
+  db:
+    image: postgres:latest
+    container_name: ps01
