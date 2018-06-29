@@ -1,4 +1,4 @@
 Django==2.0.6
-Reportlab==3.4.0
-gunicorn==19.8.1
+gunicorn
 psycopg2==2.7.5
+Reportlab==3.4.0
