@@ -14,7 +14,7 @@ services:
   web:
     build: .
     container_name: dg01
-    command: bash -c "pip install gunicorn && python manage.py makemigrations && python manage.py migrate && gunicorn fortex.wsgi -b 0.0.0.0:8000"
+    command: bash -c "pip install gunicorn && python manage.py makemigrations && python manage.py migrate && gunicorn fortex.wsgi"
     volumes:
       - .:/code
     expose:
