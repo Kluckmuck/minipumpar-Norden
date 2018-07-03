@@ -4,7 +4,11 @@
   "description": "install webpack npm install --save-dev webpack webpack-cli",
   "main": "index.jsx",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
   },
   "author": "",
   "license": "ISC",
@@ -12,11 +16,13 @@
     "aws-amplify-react": "^0.1.50",
     "babel-eslint": "^8.2.3",
     "css-loader": "^0.28.11",
+    "jquery": "^3.3.1",
     "react": "^16.3.2",
     "react-bootstrap": "^0.32.1",
     "react-dom": "^16.3.2",
     "react-router": "^4.3.1",
     "react-router-dom": "^4.3.1",
+    "react-scripts": "^1.1.4",
     "style-loader": "^0.21.0"
   },
   "devDependencies": {
