@@ -1,0 +1,15 @@
+upstream web {
+  ip_hash;
+  server web:8000;
+}
+
+# portal
+
+server {
+root /home/minipumpar/minipumpar-Norden/backend;
+  location / {
+        proxy_pass tp://web/;
+    }
+  listen 8000;
+  server_name _;  
+}
