@@ -1,7 +1,7 @@
 import React from "react";
 import { Button, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
-import App from './App.jsx'
-import "./css/inputs.css"
+import App from './NavBar.jsx'
+import "./Inputs.css"
 
 
 var site  = 'http://cities.jonkri.se'

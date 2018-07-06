@@ -1,25 +1,9 @@
 import React, { Component } from "react";
 import { Button, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
-import "./css/Login.css";
+import "./Login.css";
 import { withRouter } from "react-router-dom";
-import jQuery from 'jquery';
 
 var site  = 'http://maxjou.se:8000';
-var csrftoken = getCookie('csrftoken');
-function getCookie(name) {
-  var cookieValue = null;
-  if (document.cookie && document.cookie !== '') {
-      var cookies = document.cookie.split(';');
-      for (var i = 0; i < cookies.length; i++) {
-          var cookie = jQuery.trim(cookies[i]);
-          if (cookie.substring(0, name.length + 1) === (name + '=')) {
-              cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-              break;
-          }
-      }
-  }
-  return cookieValue;
-}
 
  class Login extends Component{
   constructor(props) {
@@ -46,11 +30,6 @@ function getCookie(name) {
     fetch (site + '/api/login/', {
       credentials: 'include',
       method: 'post',
-      headers: {
-        'Accept': 'text/plain',
-        'Content-Type': 'application/json',
-        'X-CSRFToken': csrftoken
-      },
       body: JSON.stringify({
         username: this.state.email,
         password: this.state.password
@@ -66,7 +45,7 @@ function getCookie(name) {
   })
 
     event.preventDefault();
-    // this.props.history.push('/inputs')
+    this.props.history.push('/inputs')
     console.log('Hello')
   }
   render() {
