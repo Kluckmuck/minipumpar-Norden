@@ -1,40 +1,19 @@
 {
-  "name": "start",
-  "version": "1.0.0",
-  "description": "install webpack npm install --save-dev webpack webpack-cli",
-  "main": "index.jsx",
+  "name": "frontend2",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "node-modules": "^1.0.1",
+    "react": "^16.4.1",
+    "react-bootstrap": "^0.32.1",
+    "react-dom": "^16.4.1",
+    "react-router-dom": "^4.3.1",
+    "react-scripts": "1.1.4"
+  },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
-  },
-  "author": "",
-  "license": "ISC",
-  "dependencies": {
-    "aws-amplify-react": "^0.1.50",
-    "babel-eslint": "^8.2.3",
-    "css-loader": "^0.28.11",
-    "jquery": "^3.3.1",
-    "react": "^16.3.2",
-    "react-bootstrap": "^0.32.1",
-    "react-dom": "^16.3.2",
-    "react-router": "^4.3.1",
-    "react-router-dom": "^4.3.1",
-    "react-scripts": "^1.1.4",
-    "style-loader": "^0.21.0"
-  },
-  "devDependencies": {
-    "babel-core": "^6.26.3",
-    "babel-loader": "^7.1.4",
-    "babel-preset-env": "^1.7.0",
-    "babel-preset-react": "^6.24.1",
-    "eslint": "^4.19.1",
-    "eslint-loader": "^2.0.0",
-    "eslint-plugin-react": "^7.8.2",
-    "webpack": "^4.8.3",
-    "webpack-cli": "^2.1.3",
-    "webpack-dev-server": "^3.1.4"
   }
 }

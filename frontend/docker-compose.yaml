@@ -2,8 +2,8 @@ version: '3.5'
 
 services:
 
-  sample-app:
-    container_name: sample-app
+  minipumpar-app:
+    container_name: minipumpar-container
     build:
       context: .
       dockerfile: Dockerfile

@@ -2,8 +2,8 @@
 import React, {Component }from "react";
 import { Link } from "react-router-dom";
 import {  Navbar } from "react-bootstrap";
-import "./css/App.css";
- class App extends Component {
+import "./NavBar.css";
+ class NavBar extends Component {
     render (){
         return  <div className="container">
        <Navbar fluid collapseOnSelect>
@@ -18,4 +18,4 @@ import "./css/App.css";
     }
 }
 
-export default App;
+export default NavBar;
