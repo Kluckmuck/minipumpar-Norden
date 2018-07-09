@@ -9,16 +9,17 @@ class Input extends React.Component {
   constructor(props){
     super(props);
     this.state ={
-      name: "",
-      adress:"",
-      kontakt:"123",
-      pumpMng:"",
-      datum:"",
-      littNr: "",
-      resTid:"",
-      grundavgift:"",
-      pumpStart:"",
-      pumpSlut:"",
+      namn: 'Minipump AB',
+      adress:'Pumpgatan 20',
+      kontakt :'Zara Larsson',
+      pumpMng: '13',
+      littNr: '3144',
+      resTid: '4',
+      maskinist: 'Korea',
+      grundavgift : '1500',
+      datum : '2018-06-11',
+      pumpStart : '2018-06-11 13:13:21',
+      pumpSlut : '2018-06-11 13:13:21'
     }
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -37,14 +38,15 @@ class Input extends React.Component {
     fetch (site + '/api/bokning/', {
       method: 'post',
       body: JSON.stringify({
-      namn:this.state.name ,
+      namn:this.state.namn ,
       adress:this.state.adress,
       kontakt:this.state.kontakt,
       pumpMng:this.state.pumpMng,
-      datum:this.state.datum,
       littNr:this.state.littNr,
       resTid:this.state.resTid,
+      maskinist: this.state.maskinist,
       grundavgift:this.state.grundavgift,
+      datum:this.state.datum,
       pumpStart:this.state.pumpStart,
       pumpSlut:this.state.pumpSlut,
       })
@@ -59,11 +61,19 @@ class Input extends React.Component {
     <h1>Minipumpar</h1>
     <App/>
       <form onSubmit = {this.handleSubmit}>
-        <FormGroup controlId="name" bsSize="large">
+        <FormGroup controlId="maskinist" bsSize="large">
+          <ControlLabel>Maskinist:</ControlLabel>
+            <FormControl
+            type="text"
+            value={this.state.maskinist}
+            onChange={this.handleChange}
+            ></FormControl>
+        </FormGroup>
+        <FormGroup controlId="namn" bsSize="large">
           <ControlLabel>Namn:</ControlLabel>
             <FormControl
             type="text"
-            value={this.state.name}
+            value={this.state.namn}
             onChange={this.handleChange}
             ></FormControl>
         </FormGroup>
@@ -78,7 +88,7 @@ class Input extends React.Component {
         <FormGroup controlId="kontakt" bsSize="large">
           <ControlLabel>Kontakt:</ControlLabel>
             <FormControl
-            type="number"
+            type="text"
             value={this.state.kontakt}
             onChange={this.handleChange}
             ></FormControl>
@@ -126,7 +136,7 @@ class Input extends React.Component {
         <FormGroup controlId="pumpStart" bsSize="large">
           <ControlLabel>Pump Start:</ControlLabel>
             <FormControl
-            type="time"
+            type="datetime"
             value={this.state.pumpStart}
             onChange={this.handleChange}
             ></FormControl>
@@ -134,7 +144,7 @@ class Input extends React.Component {
         <FormGroup controlId="pumpSlut" bsSize="large">
           <ControlLabel>Pump Slut:</ControlLabel>
             <FormControl
-            type="text"
+            type="datetime"
             value={this.state.pumpSlut}
             onChange={this.handleChange}
             ></FormControl>
@@ -153,4 +163,5 @@ class Input extends React.Component {
 }
 
 export default  Input;
+
 
