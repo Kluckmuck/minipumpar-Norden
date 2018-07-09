@@ -90,7 +90,6 @@ class BokningTestCase(TestCase):
             'pumpMng': '13',
             'littNr': '3144',
             'resTid': '4',
-            'maskinist': 'Korea',
             'grundavgift' : '1500',
             'datum' : '2018-06-11',
             'pumpStart' : '2018-06-11 13:13:21',
