@@ -10,14 +10,17 @@ var site  = 'http://maxjou.se:8000';
     super(props);
     
     this.state = {
-      email: "test@test.se",
+      username: "test@test.se",
       password: "test123123"
     };
+
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
 
   validateForm () {
-    return this.state.email.length > 0 && this.state.password.length > 0;
+    return this.state.username.length > 0 && this.state.password.length > 0;
   }
  
   handleChange(e){
@@ -25,48 +28,48 @@ var site  = 'http://maxjou.se:8000';
  }
 
   handleSubmit(event) {
-
+    event.preventDefault();
 
     fetch (site + '/api/login/', {
-      credentials: 'include',
       method: 'post',
       body: JSON.stringify({
-        username: this.state.email,
+        username: this.state.username,
         password: this.state.password
       })
     }).then(response => {
-      response.json().then(data => ({
-        data: data,
-        status: response.status
+      console.log(response.status)
+      if(response.status === 200){
+      console.log("Login successfull");
+      this.props.history.push('/inputs')
+      }else if (response.status === 204){
+        console.log("Username passwod do not match");
+      }else {
+        console.log("username does not exist")
+        alert("username does not exist");
+      }
       })
-    ).then(res =>{
-      console.log(res.status, res.data.title)
-    })
-  })
 
-    event.preventDefault();
-    this.props.history.push('/inputs')
     console.log('Hello')
   }
   render() {
     return (
   <div className="Login">
     <h1>Login</h1>
-      <form onSubmit={this.handleSubmit.bind(this)}>
-          <FormGroup controlId="email" bsSize="large">
+      <form onSubmit={this.handleSubmit}>
+          <FormGroup controlId="username" bsSize="large">
             <ControlLabel>Email</ControlLabel>
             <FormControl
               autoFocus
               type="email"
-              value={this.state.email}
-              onChange={this.handleChange.bind(this)}
+              value={this.state.username}
+              onChange={this.handleChange}
             />
           </FormGroup>
           <FormGroup controlId="password" bsSize="large">
             <ControlLabel>Password</ControlLabel>
             <FormControl
               value={this.state.password}
-              onChange={this.handleChange.bind(this)}
+              onChange={this.handleChange}
               type="password"
             />
           </FormGroup>
@@ -86,4 +89,6 @@ var site  = 'http://maxjou.se:8000';
 }
 
 export default withRouter(Login);
+
+
 

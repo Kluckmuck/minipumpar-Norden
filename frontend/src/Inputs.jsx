@@ -4,16 +4,15 @@ import App from './NavBar.jsx'
 import "./Inputs.css"
 
 
-var site  = 'http://cities.jonkri.se'
+var site  = 'http://maxjou.se:8000'
 class Input extends React.Component {
   constructor(props){
     super(props);
-
     this.state ={
       name: "",
       adress:"",
       kontakt:"123",
-      pumpMgn:"",
+      pumpMng:"",
       datum:"",
       littNr: "",
       resTid:"",
@@ -21,12 +20,13 @@ class Input extends React.Component {
       pumpStart:"",
       pumpSlut:"",
     }
-
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  validateForm() {
-    return ;
-  }
+  // validateForm() {
+  //   return ;
+  // }
   handleChange(e){
     this.setState({[e.target.id]: e.target.value});
  }
@@ -34,21 +34,22 @@ class Input extends React.Component {
   handleSubmit (event){
     event.preventDefault();
 
-    fetch (site, {
+    fetch (site + '/api/bokning/', {
       method: 'post',
       body: JSON.stringify({
-      name:this.state.name ,
+      namn:this.state.name ,
       adress:this.state.adress,
       kontakt:this.state.kontakt,
-      pumpMgn:this.state.pumpMgn,
+      pumpMng:this.state.pumpMng,
       datum:this.state.datum,
       littNr:this.state.littNr,
       resTid:this.state.resTid,
       grundavgift:this.state.grundavgift,
       pumpStart:this.state.pumpStart,
       pumpSlut:this.state.pumpSlut,
-
       })
+    }).then(response => {
+      console.log(response.status);
     })
   }
 
@@ -57,13 +58,13 @@ class Input extends React.Component {
     <div className="Inputs">
     <h1>Minipumpar</h1>
     <App/>
-      <form onSubmit = {this.handleSubmit.bind(this)}>
+      <form onSubmit = {this.handleSubmit}>
         <FormGroup controlId="name" bsSize="large">
           <ControlLabel>Namn:</ControlLabel>
             <FormControl
             type="text"
             value={this.state.name}
-            onChange={this.handleChange.bind(this)}
+            onChange={this.handleChange}
             ></FormControl>
         </FormGroup>
         <FormGroup controlId="adress" bsSize="large">
@@ -71,7 +72,7 @@ class Input extends React.Component {
             <FormControl
             type="text"
             value={this.state.adress}
-            onChange={this.handleChange.bind(this)}
+            onChange={this.handleChange}
             ></FormControl>
         </FormGroup>
         <FormGroup controlId="kontakt" bsSize="large">
@@ -79,15 +80,15 @@ class Input extends React.Component {
             <FormControl
             type="number"
             value={this.state.kontakt}
-            onChange={this.handleChange.bind(this)}
+            onChange={this.handleChange}
             ></FormControl>
         </FormGroup>
-        <FormGroup controlId="pumpMgn" bsSize="large">
+        <FormGroup controlId="pumpMng" bsSize="large">
           <ControlLabel>Pumpmängd:</ControlLabel>
             <FormControl
             type="number"
-            value={this.state.pumpMgn}
-            onChange={this.handleChange.bind(this)}
+            value={this.state.pumpMng}
+            onChange={this.handleChange}
             ></FormControl>
         </FormGroup>
          <FormGroup controlId="littNr" bsSize="large">
@@ -95,7 +96,7 @@ class Input extends React.Component {
             <FormControl
             type="number"
             value={this.state.littNr}
-            onChange={this.handleChange.bind(this)}
+            onChange={this.handleChange}
             ></FormControl>
         </FormGroup>
         <FormGroup controlId="resTid" bsSize="large">
@@ -103,7 +104,7 @@ class Input extends React.Component {
             <FormControl
             type="number"
             value={this.state.resTid}
-            onChange={this.handleChange.bind(this)}
+            onChange={this.handleChange}
             ></FormControl>
         </FormGroup>
         <FormGroup controlId="grundavgift" bsSize="large">
@@ -111,7 +112,7 @@ class Input extends React.Component {
             <FormControl
             type="number"
             value={this.state.grundavgift}
-            onChange={this.handleChange.bind(this)}
+            onChange={this.handleChange}
             ></FormControl>
         </FormGroup>
         <FormGroup controlId="datum" bsSize="large">
@@ -119,7 +120,7 @@ class Input extends React.Component {
             <FormControl
             type="date"
             value={this.state.datum}
-            onChange={this.handleChange.bind(this)}
+            onChange={this.handleChange}
             ></FormControl>
         </FormGroup>
         <FormGroup controlId="pumpStart" bsSize="large">
@@ -127,7 +128,7 @@ class Input extends React.Component {
             <FormControl
             type="time"
             value={this.state.pumpStart}
-            onChange={this.handleChange.bind(this)}
+            onChange={this.handleChange}
             ></FormControl>
         </FormGroup>
         <FormGroup controlId="pumpSlut" bsSize="large">
@@ -135,13 +136,13 @@ class Input extends React.Component {
             <FormControl
             type="text"
             value={this.state.pumpSlut}
-            onChange={this.handleChange.bind(this)}
+            onChange={this.handleChange}
             ></FormControl>
         </FormGroup>
         <Button
             block
             bsSize="large"
-            disabled={!this.validateForm()}
+            // disabled={!this.validateForm()}
             type="submit"
           >
             Skicka
