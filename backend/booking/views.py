@@ -45,7 +45,8 @@ def bokning(request):
         if klientForm.is_valid() and bokningForm.is_valid():
             #Skriv till db.
             namn = json.loads(request.body.decode())['namn'].strip()
-            user = json.loads(request.body.decode())['maskinist'].strip()
+            #user = json.loads(request.body.decode())['maskinist'].strip()
+            user = request.user
             # Se om en instans av Klient finns i DB
             query = Klient.objects.filter(namn=namn)
             if query.exists():
