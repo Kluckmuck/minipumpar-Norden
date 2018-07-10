@@ -109,6 +109,7 @@ class BokningTestCase(TestCase):
             'pumpStart' : '2018-06-12 14:13:21',
             'pumpSlut' : '2018-06-12 10:13:21'
         }), content_type='application/json')
+        {"namn":"Bygga AB","adress":"Betonggatan 24","kontakt" :"Erik Betongsson","pumpMng": "1233","littNr": " 31A42  ","resTid": "5","grundavgift" : "1250","datum" : "2018-06-12", "pumpStart" : "2018-06-12 14:13:21","pumpSlut":"2018-06-12 10:13:21"}
 
         self.assertEqual(response.status_code, 201)
         self.assertEqual(response2.status_code, 201)
