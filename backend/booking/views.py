@@ -65,7 +65,8 @@ def bokning(request):
             try:
                 user = User.objects.get(email=user)
             except User.DoesNotExist:
-                return HttpResponseNotFound('<h1>User not found</h1>')
+                print(user)
+                return HttpResponseNotFound('<h1>User not found</h1>', user)
         bokning = bokningForm.save(commit=False)
         bokning.klient = klient
         bokning.maskinist = user
