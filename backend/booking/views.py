@@ -6,6 +6,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import ensure_csrf_cookie, csrf_exempt
+from django.core.exceptions import ValidationError
 from django.db import connection
 from reportlab.pdfgen import canvas
 
@@ -42,32 +43,34 @@ def bokning(request):
         klientForm = KlientForm(json.loads(request.body.decode()))
         bokningForm = BokningForm(json.loads(request.body.decode()))
         #Validera data.
-        if klientForm.is_valid() and bokningForm.is_valid():
-            #Skriv till db.
-            namn = json.loads(request.body.decode())['namn'].strip()
-            #user = json.loads(request.body.decode())['maskinist'].strip()
-            user = request.user
-            # Se om en instans av Klient finns i DB
-            query = Klient.objects.filter(namn=namn)
-            if query.exists():
-                klient = Klient.objects.get(namn=namn)
-            else:
-                klient = klientForm.save()
-            # Hitta User
-            try:
-                user = User.objects.get(username=user)
-            except User.DoesNotExist:
-                try:
-                    user = User.objects.get(email=user)
-                except User.DoesNotExist:
-                    return HttpResponseNotFound()
-            bokning = bokningForm.save(commit=False)
-            bokning.klient = klient
-            bokning.maskinist = user
-            bokning.save()
-            return HttpResponse(status=201)
+        try:
+            klientForm.is_valid()
+            bokningForm.is_valid()
+        except ValidationError as e:
+            return HttpResponse(e, status=400)
+        #Skriv till db.
+        namn = json.loads(request.body.decode())['namn'].strip()
+        #user = json.loads(request.body.decode())['maskinist'].strip()
+        user = request.user
+        # Se om en instans av Klient finns i DB
+        query = Klient.objects.filter(namn=namn)
+        if query.exists():
+            klient = Klient.objects.get(namn=namn)
         else:
-            return HttpResponse(status=400)
+            klient = klientForm.save()
+        # Hitta User
+        try:
+            user = User.objects.get(username=user)
+        except User.DoesNotExist:
+            try:
+                user = User.objects.get(email=user)
+            except User.DoesNotExist:
+                return HttpResponseNotFound('<h1>User not found</h1>')
+        bokning = bokningForm.save(commit=False)
+        bokning.klient = klient
+        bokning.maskinist = user
+        bokning.save()
+        return HttpResponse(status=201)
     else:
         return HttpResponseNotAllowed(['POST'])
 
