@@ -9,33 +9,29 @@ class Input extends React.Component {
   constructor(props){
     super(props);
     this.state ={
-      namn: 'Minipump AB',
-      adress:'Pumpgatan 20',
-      kontakt :'Zara Larsson',
-      pumpMng: '13',
-      littNr: '3144',
-      resTid: '4',
-      maskinist: 'Korea',
-      grundavgift : '1500',
-      datum : '2018-06-11',
-      pumpStart : '2018-06-11 13:13:21',
-      pumpSlut : '2018-06-11 13:13:21'
+      namn:"",
+      adress:"",
+      kontakt :"",
+      pumpMng: "",
+      littNr: "",
+      resTid: "",
+      grundavgift :"",
+      datum :"",
+      pumpStart :"2018-06-12 10:13:21",
+      pumpSlut:"2018-06-12 10:13:21"
     }
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  // validateForm() {
-  //   return ;
-  // }
   handleChange(e){
     this.setState({[e.target.id]: e.target.value});
  }
 
-  handleSubmit (event){
+ handleSubmit (event){
     event.preventDefault();
-
     fetch (site + '/api/bokning/', {
+      credentials: 'include',
       method: 'post',
       body: JSON.stringify({
       namn:this.state.namn ,
@@ -44,7 +40,6 @@ class Input extends React.Component {
       pumpMng:this.state.pumpMng,
       littNr:this.state.littNr,
       resTid:this.state.resTid,
-      maskinist: this.state.maskinist,
       grundavgift:this.state.grundavgift,
       datum:this.state.datum,
       pumpStart:this.state.pumpStart,
@@ -61,14 +56,6 @@ class Input extends React.Component {
     <h1>Minipumpar</h1>
     <App/>
       <form onSubmit = {this.handleSubmit}>
-        <FormGroup controlId="maskinist" bsSize="large">
-          <ControlLabel>Maskinist:</ControlLabel>
-            <FormControl
-            type="text"
-            value={this.state.maskinist}
-            onChange={this.handleChange}
-            ></FormControl>
-        </FormGroup>
         <FormGroup controlId="namn" bsSize="large">
           <ControlLabel>Namn:</ControlLabel>
             <FormControl
@@ -136,7 +123,7 @@ class Input extends React.Component {
         <FormGroup controlId="pumpStart" bsSize="large">
           <ControlLabel>Pump Start:</ControlLabel>
             <FormControl
-            type="datetime"
+            type="text"
             value={this.state.pumpStart}
             onChange={this.handleChange}
             ></FormControl>
@@ -144,7 +131,7 @@ class Input extends React.Component {
         <FormGroup controlId="pumpSlut" bsSize="large">
           <ControlLabel>Pump Slut:</ControlLabel>
             <FormControl
-            type="datetime"
+            type="text"
             value={this.state.pumpSlut}
             onChange={this.handleChange}
             ></FormControl>
@@ -152,7 +139,6 @@ class Input extends React.Component {
         <Button
             block
             bsSize="large"
-            // disabled={!this.validateForm()}
             type="submit"
           >
             Skicka
@@ -163,5 +149,4 @@ class Input extends React.Component {
 }
 
 export default  Input;
-
 

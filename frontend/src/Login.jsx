@@ -31,6 +31,7 @@ var site  = 'http://maxjou.se:8000';
     event.preventDefault();
 
     fetch (site + '/api/login/', {
+      
       method: 'post',
       body: JSON.stringify({
         username: this.state.username,
