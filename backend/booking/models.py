@@ -30,12 +30,14 @@ class Bokning(models.Model):
     def __str__(self):
        return self.klient.namn + " vid " + self.klient.adress + ", " + str(self.datum)
 
-class KlientForm(ModelForm):
+class KlientForm(forms.ModelForm):
     class Meta:
         model = Klient
         fields = ['namn', 'adress', 'kontakt']
 
-class BokningForm(ModelForm):
+class BokningForm(forms.ModelForm):
+    pumpStart = forms.DateTimeField(input_formats=['%Y-%m-%dT%H:%M'])
+    pumpSlut = forms.DateTimeField(input_formats=['%Y-%m-%dT%H:%M'])
     class Meta:
         model = Bokning
         fields = [
@@ -49,14 +51,12 @@ class BokningForm(ModelForm):
             'pumpSlut',
             'ovrigInfo']
     #called on validation of the form
-    def clean(self):
-        #run the standard clean method first. Replace T with whitespace
-        cleaned_data = super(BokningForm, self).clean()
-        pumpStart = self.data['pumpStart']
-        pumpStart = pumpStart.replace("T", " ")
-        #print(pumpStart)
-        cleaned_data['pumpStart'] = datetime.strptime(pumpStart, "%Y-%m-%d %H:%M")
-        #pumpSlut = cleaned_data.get("pumpSlut").replace("T", " ")
-        print(cleaned_data)
-        #print(self.data['pumpStart'])
-        return cleaned_data
+    #def clean(self):
+    #   ##run the standard clean method first. Replace T with whitespace
+    #   #cleaned_data = super(BokningForm, self).clean()
+    #   #pumpStart = self.data['pumpStart']
+    #   #pumpStart = pumpStart.replace("T", " ")
+    #   #cleaned_data['pumpStart'] = datetime.strptime(pumpStart, "%Y-%m-%d %H:%M")
+    #   #print(cleaned_data)
+    #   ##print(self.data['pumpStart'])
+    #   #return cleaned_data
