@@ -3,6 +3,7 @@ from django.utils import timezone
 from django.forms import ModelForm
 from django.contrib.auth.models import User
 from django import forms
+from datetime import datetime
 
 # Create your models here.
 class Klient(models.Model):
@@ -47,3 +48,15 @@ class BokningForm(ModelForm):
             'pumpStart',
             'pumpSlut',
             'ovrigInfo']
+    #called on validation of the form
+    def clean(self):
+        #run the standard clean method first. Replace T with whitespace
+        cleaned_data = super(BokningForm, self).clean()
+        pumpStart = self.data['pumpStart']
+        pumpStart = pumpStart.replace("T", " ")
+        #print(pumpStart)
+        cleaned_data['pumpStart'] = datetime.strptime(pumpStart, "%Y-%m-%d %H:%M")
+        #pumpSlut = cleaned_data.get("pumpSlut").replace("T", " ")
+        print(cleaned_data)
+        #print(self.data['pumpStart'])
+        return cleaned_data

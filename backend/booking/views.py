@@ -67,6 +67,7 @@ def bokning(request):
             bokning.save()
             return HttpResponse(status=201)
         else:
+            print(bokningForm.errors)
             return HttpResponse(status=400)
     else:
         return HttpResponseNotAllowed(['POST'])
