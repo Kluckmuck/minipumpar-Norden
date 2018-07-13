@@ -5,7 +5,7 @@ from django.utils import timezone
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
-from django.views.decorators.csrf import ensure_csrf_cookie
+from django.views.decorators.csrf import ensure_csrf_cookie, csrf_exempt
 from django.db import connection
 from reportlab.pdfgen import canvas
 
@@ -14,6 +14,7 @@ import json
 import datetime
 
 # Create your views here.
+@csrf_exempt
 def loginView(request):
     if request.method == 'POST':
         username = json.loads(request.body.decode())['username']
@@ -27,6 +28,7 @@ def loginView(request):
     else:
         return HttpResponseNotAllowed(['POST'])
 
+@csrf_exempt
 def logoutView(request):
     if request.method == 'GET':
         logout(request)
@@ -34,7 +36,7 @@ def logoutView(request):
     else:
         return HttpResponseNotAllowed(['GET'])
 
-@login_required
+@csrf_exempt
 def bokning(request):
     if request.method == 'POST':
         klientForm = KlientForm(json.loads(request.body.decode()))
@@ -43,7 +45,8 @@ def bokning(request):
         if klientForm.is_valid() and bokningForm.is_valid():
             #Skriv till db.
             namn = json.loads(request.body.decode())['namn'].strip()
-            user = json.loads(request.body.decode())['maskinist'].strip()
+            #user = json.loads(request.body.decode())['maskinist'].strip()
+            user = request.user
             # Se om en instans av Klient finns i DB
             query = Klient.objects.filter(namn=namn)
             if query.exists():
@@ -57,18 +60,19 @@ def bokning(request):
                 try:
                     user = User.objects.get(email=user)
                 except User.DoesNotExist:
-                    return HttpResponseNotFound()
+                    return HttpResponseNotFound('<h1>User not found</h1>', user)
             bokning = bokningForm.save(commit=False)
             bokning.klient = klient
             bokning.maskinist = user
             bokning.save()
             return HttpResponse(status=201)
         else:
+            print(bokningForm.errors)
             return HttpResponse(status=400)
     else:
         return HttpResponseNotAllowed(['POST'])
 
-@login_required
+@csrf_exempt
 def getBokning(request, bokningId):
     if request.method == 'GET':
         id = int(bokningId)
@@ -80,7 +84,7 @@ def getBokning(request, bokningId):
     else:
         return HttpResponseNotAllowed(['GET'])
 
-@login_required
+@csrf_exempt
 def klient(request, klientId):
     if request.method == 'GET':
         id = int(klientId)

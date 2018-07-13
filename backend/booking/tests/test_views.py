@@ -90,11 +90,10 @@ class BokningTestCase(TestCase):
             'pumpMng': '13',
             'littNr': '3144',
             'resTid': '4',
-            'maskinist': 'Korea',
             'grundavgift' : '1500',
             'datum' : '2018-06-11',
-            'pumpStart' : '2018-06-11 13:13:21',
-            'pumpSlut' : '2018-06-11 13:13:21'
+            'pumpStart' : '2019-01-01T00:02',
+            'pumpSlut' : '2019-02-01T00:02'
         }), content_type='application/json')
 
         response2 = self.client.post('/api/bokning/', json.dumps({
@@ -104,12 +103,12 @@ class BokningTestCase(TestCase):
             'pumpMng': '1233',
             'littNr': ' 31A42  ',
             'resTid': '5',
-            'maskinist': 'bibimbap@gmail.com',
             'grundavgift' : '1250',
             'datum' : '2018-06-12',
-            'pumpStart' : '2018-06-12 14:13:21',
-            'pumpSlut' : '2018-06-12 10:13:21'
+            'pumpStart' : '2018-11-09T00:02',
+            'pumpSlut' : '2018-11-13T00:02'
         }), content_type='application/json')
+        {"namn":"Bygga AB","adress":"Betonggatan 24","kontakt" :"Erik Betongsson","pumpMng": "1233","littNr": " 31A42  ","resTid": "5","grundavgift" : "1250","datum" : "2018-06-12", "pumpStart" : "2018-06-12 14:13:21","pumpSlut":"2018-06-12 10:13:21"}
 
         self.assertEqual(response.status_code, 201)
         self.assertEqual(response2.status_code, 201)
