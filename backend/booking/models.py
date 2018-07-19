@@ -2,6 +2,8 @@ from django.db import models
 from django.utils import timezone
 from django.forms import ModelForm
 from django.contrib.auth.models import User
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 from django import forms
 from datetime import datetime
 
@@ -13,6 +15,19 @@ class Klient(models.Model):
 
     def __str__(self):
        return self.namn + " vid " + self.adress + ", " + self.kontakt
+
+class Profile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    targetMail = models.EmailField(default='info@minipumpar.se')
+
+@receiver(post_save, sender=User)
+def create_user_profile(sender, instance, created, **kwargs):
+    if created:
+        Profile.objects.create(user=instance)
+
+@receiver(post_save, sender=User)
+def save_user_profile(sender, instance, **kwargs):
+    instance.profile.save()
 
 class Bokning(models.Model):
     klient = models.ForeignKey('Klient', on_delete=models.CASCADE)
@@ -50,13 +65,3 @@ class BokningForm(forms.ModelForm):
             'pumpStart',
             'pumpSlut',
             'ovrigInfo']
-    #called on validation of the form
-    #def clean(self):
-    #   ##run the standard clean method first. Replace T with whitespace
-    #   #cleaned_data = super(BokningForm, self).clean()
-    #   #pumpStart = self.data['pumpStart']
-    #   #pumpStart = pumpStart.replace("T", " ")
-    #   #cleaned_data['pumpStart'] = datetime.strptime(pumpStart, "%Y-%m-%d %H:%M")
-    #   #print(cleaned_data)
-    #   ##print(self.data['pumpStart'])
-    #   #return cleaned_data
