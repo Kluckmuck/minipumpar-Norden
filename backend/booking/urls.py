@@ -16,7 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from django.contrib.auth import views as auth_views
-from . import views, views_pdf
+from . import views, views_pdf, views_settings
 
 urlpatterns = [
     path('bokning/', views.bokning),
@@ -27,5 +27,6 @@ urlpatterns = [
     path('change-password/', auth_views.PasswordChangeView.as_view()),
     path('pdf/bokning/<int:bokningId>/', views_pdf.createLocalPdfView),
     path('mail/', views_pdf.mailBokning),
-    path('token/', views.token)
+    path('token/', views.token),
+    path('settings/targetMail/', views_settings.targetMail)
 ]
