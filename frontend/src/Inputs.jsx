@@ -63,7 +63,7 @@ class Input extends React.Component {
   render() {
     return(
     <div className="Inputs">
-    <h1>Minipumpar</h1>
+    <h1 className="display-1 text-center">Minipumpar</h1>
     <App/>
       <form onSubmit = {this.handleSubmit}>
         <FormGroup controlId="namn" bsSize="large">
