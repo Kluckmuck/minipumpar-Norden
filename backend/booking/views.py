@@ -6,8 +6,6 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import ensure_csrf_cookie, csrf_exempt
-from django.db import connection
-from reportlab.pdfgen import canvas
 
 from .models import Klient, KlientForm, Bokning, BokningForm
 import json
