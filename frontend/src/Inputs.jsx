@@ -3,8 +3,11 @@ import { Button, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
 import App from './NavBar.jsx'
 import "./Inputs.css"
 
+let header = new Headers({
+  "Content-Type": "application/json; charset=utf-8"
+});
+var site  = 'http://maxjou.se:8000';
 
-var site  = 'http://maxjou.se:8000'
 class Input extends React.Component {
   constructor(props){
     super(props);
@@ -17,8 +20,8 @@ class Input extends React.Component {
       resTid: "",
       grundavgift :"",
       datum :"",
-      pumpStart :"2018-06-12 10:13:21",
-      pumpSlut:"2018-06-12 10:13:21"
+      pumpStart :"",
+      pumpSlut:""
     }
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -31,8 +34,9 @@ class Input extends React.Component {
  handleSubmit (event){
     event.preventDefault();
     fetch (site + '/api/bokning/', {
+      method: 'POST',
       credentials: 'include',
-      method: 'post',
+      header:header,
       body: JSON.stringify({
       namn:this.state.namn ,
       adress:this.state.adress,
@@ -46,6 +50,12 @@ class Input extends React.Component {
       pumpSlut:this.state.pumpSlut,
       })
     }).then(response => {
+      if(response.status === 201){
+        console.log("Succesfully posted")
+      }
+      if(response.status === 404){
+        alert("NOT LOGGED IN")
+      }
       console.log(response.status);
     })
   }
@@ -123,7 +133,7 @@ class Input extends React.Component {
         <FormGroup controlId="pumpStart" bsSize="large">
           <ControlLabel>Pump Start:</ControlLabel>
             <FormControl
-            type="text"
+            type="datetime-local"
             value={this.state.pumpStart}
             onChange={this.handleChange}
             ></FormControl>
@@ -131,7 +141,7 @@ class Input extends React.Component {
         <FormGroup controlId="pumpSlut" bsSize="large">
           <ControlLabel>Pump Slut:</ControlLabel>
             <FormControl
-            type="text"
+            type="datetime-local"
             value={this.state.pumpSlut}
             onChange={this.handleChange}
             ></FormControl>
