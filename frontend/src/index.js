@@ -1,8 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
-import Login from "./Login.jsx";
-import Inputs from "./Inputs.jsx";
+import Login from "./components/Login.jsx";
+import Inputs from "./components/Inputs.jsx";
 import { HashRouter as Router, Route } from 'react-router-dom';
 import registerServiceWorker from './registerServiceWorker';
 import Settings from "./components/Settings.jsx";
