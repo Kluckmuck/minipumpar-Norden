@@ -3,12 +3,17 @@ import { Button, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
 import "./Login.css";
 import { withRouter } from "react-router-dom";
 
+let header = new Headers({
+  "Content-Type": "application/json; charset=utf-8",
+  "Access-Control-Request-Headers": "*",
+  "Access-Control-Allow-Methods": "GET, POST, HEAD, OPTIONS, PUT, DELETE, PATCH"
+});
 var site  = 'http://maxjou.se:8000';
 
  class Login extends Component{
   constructor(props) {
     super(props);
-    
+
     this.state = {
       username: "test@test.se",
       password: "test123123"
@@ -22,7 +27,7 @@ var site  = 'http://maxjou.se:8000';
   validateForm () {
     return this.state.username.length > 0 && this.state.password.length > 0;
   }
- 
+
   handleChange(e){
     this.setState({[e.target.id]: e.target.value});
  }
@@ -31,8 +36,9 @@ var site  = 'http://maxjou.se:8000';
     event.preventDefault();
 
     fetch (site + '/api/login/', {
-      
+
       method: 'post',
+      header:header,
       body: JSON.stringify({
         username: this.state.username,
         password: this.state.password
@@ -90,7 +96,3 @@ var site  = 'http://maxjou.se:8000';
 }
 
 export default withRouter(Login);
-
-
-
-
