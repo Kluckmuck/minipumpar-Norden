@@ -56,11 +56,11 @@ ROOT_URLCONF = 'fortex.urls'
 
 # CORS MAGIC
 CORS_ORIGIN_ALLOW_ALL = False
-CORS_ALLOW_CREDENTIALS = True
+CORS_ALLOW_CREDENTIALS = True   
 CORS_ORIGIN_WHITELIST = (
-    'http://maxjou.se/'
+    'maxjou.se',
+    'localhost:3000',
 )
-
 
 
 TEMPLATES = [
