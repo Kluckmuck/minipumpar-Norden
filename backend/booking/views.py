@@ -12,7 +12,6 @@ import json
 import datetime
 
 # Create your views here.
-@csrf_exempt
 def loginView(request):
     if request.method == 'POST':
         username = json.loads(request.body.decode())['username']
@@ -26,7 +25,7 @@ def loginView(request):
     else:
         return HttpResponseNotAllowed(['POST'])
 
-@csrf_exempt
+@login_required
 def logoutView(request):
     if request.method == 'GET':
         logout(request)
@@ -34,7 +33,7 @@ def logoutView(request):
     else:
         return HttpResponseNotAllowed(['GET'])
 
-@csrf_exempt
+@login_required
 def bokning(request):
     if request.method == 'POST':
         klientForm = KlientForm(json.loads(request.body.decode()))
@@ -70,7 +69,7 @@ def bokning(request):
     else:
         return HttpResponseNotAllowed(['POST'])
 
-@csrf_exempt
+@login_required
 def getBokning(request, bokningId):
     if request.method == 'GET':
         id = int(bokningId)
@@ -82,7 +81,7 @@ def getBokning(request, bokningId):
     else:
         return HttpResponseNotAllowed(['GET'])
 
-@csrf_exempt
+@login_required
 def klient(request, klientId):
     if request.method == 'GET':
         id = int(klientId)
