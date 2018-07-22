@@ -2,16 +2,17 @@ import React, { Component } from "react";
 import { Button, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
 import "./Login.css";
 import { withRouter } from "react-router-dom";
-import { Cookies } from "js-cookie";
+import Cookies from "js-cookie";
+
+var site  = 'http://maxjou.se:8000';
+var csrftoken = Cookies.get('csrftoken');
 
 let header = new Headers({
   "Content-Type": "application/json; charset=utf-8",
   "Access-Control-Request-Headers": "*",
   "Access-Control-Allow-Methods": "GET, POST, HEAD, OPTIONS, PUT, DELETE, PATCH",
-  "X-CSRFToken": getCookie("csrftoken")
+  "X-CSRFToken": csrftoken
 });
-var site  = 'http://maxjou.se:8000';
-var csrftoken = Cookies.get('csrftoken');
 
  class Login extends Component{
   constructor(props) {
