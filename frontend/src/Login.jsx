@@ -2,13 +2,15 @@ import React, { Component } from "react";
 import { Button, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
 import "./Login.css";
 import { withRouter } from "react-router-dom";
+import DjangoCSRFToken from 'django-react-csrftoken'
+
+var site  = 'http://maxjou.se:8000';
 
 let header = new Headers({
   "Content-Type": "application/json; charset=utf-8",
   "Access-Control-Request-Headers": "*",
   "Access-Control-Allow-Methods": "GET, POST, HEAD, OPTIONS, PUT, DELETE, PATCH"
 });
-var site  = 'http://maxjou.se:8000';
 
  class Login extends Component{
   constructor(props) {
@@ -22,7 +24,6 @@ var site  = 'http://maxjou.se:8000';
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
-
 
   validateForm () {
     return this.state.username.length > 0 && this.state.password.length > 0;
@@ -38,7 +39,7 @@ var site  = 'http://maxjou.se:8000';
     fetch (site + '/api/login/', {
 
       method: 'post',
-      header:header,
+      header,
       body: JSON.stringify({
         username: this.state.username,
         password: this.state.password
@@ -51,18 +52,16 @@ var site  = 'http://maxjou.se:8000';
       }else if (response.status === 204){
         console.log("Username passwod do not match");
       }else {
-        console.log("username does not exist")
-        alert("username does not exist");
+        console.log("username does not exist");
       }
-      })
-
-    console.log('Hello')
+    })
   }
   render() {
     return (
   <div className="Login">
     <h1>Login</h1>
       <form onSubmit={this.handleSubmit}>
+          <DjangoCSRFToken/>
           <FormGroup controlId="username" bsSize="large">
             <ControlLabel>Email</ControlLabel>
             <FormControl
