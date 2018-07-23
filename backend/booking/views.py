@@ -12,6 +12,7 @@ import json
 import datetime
 
 # Create your views here.
+@ensure_csrf_cookie
 def loginView(request):
     if request.method == 'POST':
         username = json.loads(request.body.decode())['username']
