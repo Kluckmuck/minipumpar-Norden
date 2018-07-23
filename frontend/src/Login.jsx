@@ -2,14 +2,16 @@ import React, { Component } from "react";
 import { Button, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
 import "./Login.css";
 import { withRouter } from "react-router-dom";
-import DjangoCSRFToken from 'django-react-csrftoken'
+import DjangoCSRFToken from 'django-react-csrftoken';
+import Cookies from 'js-cookie';
 
 var site  = 'http://maxjou.se:8000';
 
 let header = new Headers({
   "Content-Type": "application/json; charset=utf-8",
   "Access-Control-Request-Headers": "*",
-  "Access-Control-Allow-Methods": "GET, POST, HEAD, OPTIONS, PUT, DELETE, PATCH"
+  "Access-Control-Allow-Methods": "GET, POST, HEAD, OPTIONS, PUT, DELETE, PATCH",
+  "X-CSRFToken": Cookies.get('csrftoken')
 });
 
  class Login extends Component{
@@ -39,7 +41,7 @@ let header = new Headers({
     fetch (site + '/api/login/', {
 
       method: 'post',
-      header,
+      header: header,
       body: JSON.stringify({
         username: this.state.username,
         password: this.state.password
