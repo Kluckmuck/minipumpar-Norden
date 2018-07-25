@@ -1,12 +1,12 @@
 import React, { Component } from "react";
 import { Button, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
 import { withRouter } from "react-router-dom";
-import Cookies from 'js-cookie';
-import DjangoCSRFToken from 'django-react-csrftoken'
 import "./Login.css";
 
+let header = new Headers({
+  "Content-Type": "application/json; charset=utf-8"
+});
 var site  = 'http://maxjou.se:8000';
-var csrftoken = Cookies.get('csrftoken');
 
  class Login extends Component{
   constructor(props) {
@@ -31,64 +31,54 @@ var csrftoken = Cookies.get('csrftoken');
 
   handleSubmit(event) {
     event.preventDefault();
-
     fetch (site + '/api/login/', {
 
       method: 'post',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json; charset=utf-8',
-        'X-CSRFToken': csrftoken
-      },
+      header:header,
       body: JSON.stringify({
         username: this.state.username,
         password: this.state.password
       })
     }).then(response => {
-      console.log(response.status)
       if(response.status === 200){
-      console.log("Login successfull");
       this.props.history.push('/inputs')
-      }else if (response.status === 204){
-        console.log("Username passwod do not match");
-      }else {
-        console.log(csrftoken);
+    }else if (response.status === 401){
+        alert("Ogiltligt användarnamn och/eller lösenord");
       }
     })
   }
   render() {
     return (
-  <div className="Login">
-    <h1>Login</h1>
-      <form onSubmit={this.handleSubmit}>
-        <DjangoCSRFToken/>
-        <FormGroup controlId="username" bsSize="large">
-          <ControlLabel>Email</ControlLabel>
-          <FormControl
-            autoFocus
-            type="email"
-            value={this.state.username}
-            onChange={this.handleChange}
-          />
-        </FormGroup>
-        <FormGroup controlId="password" bsSize="large">
-          <ControlLabel>Password</ControlLabel>
-          <FormControl
-            value={this.state.password}
-            onChange={this.handleChange}
-            type="password"
-          />
-        </FormGroup>
-        <Button
-          block
-          bsSize="large"
-          disabled={!this.validateForm()}
-          type="submit"
-        >
-          Login
-        </Button>
-      </form>
-  </div>
+      <div className="Login">
+        <h1>Login</h1>
+          <form onSubmit={this.handleSubmit}>
+            <FormGroup controlId="username" bsSize="large">
+              <ControlLabel>Email</ControlLabel>
+              <FormControl
+                autoFocus
+                type="email"
+                value={this.state.username}
+                onChange={this.handleChange}
+              />
+            </FormGroup>
+            <FormGroup controlId="password" bsSize="large">
+              <ControlLabel>Password</ControlLabel>
+              <FormControl
+                value={this.state.password}
+                onChange={this.handleChange}
+                type="password"
+              />
+            </FormGroup>
+            <Button
+              block
+              bsSize="large"
+              disabled={!this.validateForm()}
+              type="submit"
+            >
+              Login
+            </Button>
+          </form>
+      </div>
   );
 }
 
