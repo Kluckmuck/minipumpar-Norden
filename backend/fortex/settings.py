@@ -63,7 +63,8 @@ EMAIL_USE_TLS = True
 CORS_ORIGIN_ALLOW_ALL = False
 CORS_ALLOW_CREDENTIALS = True
 CORS_ORIGIN_WHITELIST = (
-    'http://localhost:3000/' # Here was the problem indeed and it has to be http://localhost:3000/, not http://localhost:3000/
+    'maxjou.se',
+    'localhost:3000',
 )
 
 #DEPLOY SETTINGS
