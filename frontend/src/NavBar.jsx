@@ -1,10 +1,9 @@
 
 import React, {Component }from "react";
 import { Link } from "react-router-dom";
-import {  Navbar , NavItem, Nav, NavDropdown, MenuItemLink, MenuItem} from "react-bootstrap";
+import {  Navbar , Nav, NavDropdown, MenuItem} from "react-bootstrap";
 import "./NavBar.css";
 
-var FontAwesome = require('react-fontawesome');
  class NavBar extends Component {
    render (){
    return  <div className="container">
@@ -18,7 +17,7 @@ var FontAwesome = require('react-fontawesome');
          <Navbar.Collapse>
            <Nav>
            <NavDropdown title="Inställningar" >
-           
+
              <Link to="/"> <MenuItem>Settings</MenuItem></Link>
            </NavDropdown>
           </Nav>
@@ -28,4 +27,3 @@ var FontAwesome = require('react-fontawesome');
     }
 }
 export default NavBar;
-
