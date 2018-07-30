@@ -49,8 +49,6 @@ var site  = 'http://maxjou.se:8000';
         alert("username does not exist");
       }
       })
-
-    console.log('Hello')
   }
   render() {
     return (
