@@ -34,27 +34,6 @@ class PdfTestCase(TestCase):
 
         cls.client = Client()
 
-    def test_send_email(self):
-        login_auth(self) #Login för @login_required
-        # Send message.
-        response = self.client.post('/api/mail/', json.dumps({'bokning': '1', 'recipient': 'kluckmucki@gmail.com', 'sender': 'max.jourdanis@gmail.com'}), content_type='application/json')
-
-        self.assertEqual(response.status_code, 200)
-        # Test that one message has been sent.
-        self.assertEqual(len(mail.outbox), 1)
-
-        # Verify that the subject of the first message is correct.
-        self.assertEqual(mail.outbox[0].subject, 'subject')
-        # Veryfy attachment
-        self.assertEqual(mail.outbox[0].attachments[0][0], '2018-07-09(1).pdf')
-
-        # POST without recipient field
-        response = self.client.post('/api/mail/', json.dumps({'bokning': '1', 'user': 'max.jourdanis@gmail.com'}), content_type='application/json')
-        self.assertEqual(response.status_code, 400)
-        # POST with blank recipient
-        response = self.client.post('/api/mail/', json.dumps({'bokning': '1', 'recipient': '', 'user': 'max.jourdanis@gmail.com'}), content_type='application/json')
-        self.assertEqual(response.status_code, 400)
-
     def test_pdfBokning(self):
         login_auth(self) #Login för @login_required
         response = self.client.get('/api/pdf/bokning/1/')
