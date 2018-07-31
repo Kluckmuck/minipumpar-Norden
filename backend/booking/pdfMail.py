@@ -23,16 +23,29 @@ def pdfThenMail(bokning):
     filePath = createPdf(bokning)
     try:
         sg = sendgrid.SendGridAPIClient(apikey=os.environ.get('SENDGRID_API_KEY'))
-        from_email = Email("test@example.com")
-        email = EmailMessage(
-            #String representation som ämne
-            subject=bokning.__str__(),
-            #Användarens mail, eller våran egna?
-            from_email= 'service@algit.se',
-            to=[bokning.maskinist.profile.targetMail]
-        )
-        email.attach_file(filePath)
-        email.send(fail_silently=False)
+
+        from_email = Email("service@algit.se")
+        subject = bokning.__str__()
+        #to_email = Email(bokning.maskinist.profile.targetMail)
+        to_email = Email("kluckmucki@gmail.com")
+        content = Content("text/html", email_body)
+
+        pdf = open(filePath, "rb").read().encode("base64")
+        attachment = Attachment()
+        attachment.set_content(pdf)
+        attachment.set_type("application/pdf")
+        attachment.set_filename("test.pdf")
+        attachment.set_disposition("attachment")
+        attachment.set_content_id(number)
+
+        mail = Mail(from_email, subject, to_email, content)
+        mail.add_attachment(attachment)
+
+        response = sg.client.mail.send.post(request_body=mail.get())
+
+        print(response.status_code)
+        print(response.body)
+        print(response.headers)
     except Exception as e:
         return e
     return True

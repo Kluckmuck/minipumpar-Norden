@@ -60,14 +60,6 @@ CORS_ORIGIN_WHITELIST = (
     'localhost:3000/',
 )
 
-#DEPLOY SETTINGS
-SECURE_CONTENT_TYPE_NOSNIFF = True
-SECURE_BROWSER_XSS_FILTER = True
-SECURE_SSL_REDIRECT = True
-SESSION_COOKIE_SECURE = True
-X_FRAME_OPTIONS = 'DENY'
-
-
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
