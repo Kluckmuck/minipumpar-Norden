@@ -28,5 +28,6 @@ urlpatterns = [
     path('pdf/bokning/<int:bokningId>/', views_pdf.createLocalPdfView),
     path('mail/', views_pdf.mailBokning),
     path('token/', views.token),
-    path('settings/targetMail/', views_settings.targetMail)
+    path('settings/targetMail/', views_settings.targetMail),
+    path('settings/user/', views_settings.getUserInfo)
 ]
