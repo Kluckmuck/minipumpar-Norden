@@ -36,7 +36,19 @@ class PdfTestCase(TestCase):
 
     def test_pdfBokning(self):
         login_auth(self) #Login för @login_required
-        response = self.client.post('/api/bokning/')
+        #Posta minimal bokning
+        response = self.client.post('/api/bokning/', json.dumps({
+            'namn': '  Minipump AB   ',
+            'adress':'Pumpgatan 20    ',
+            'kontakt' :'Zara Larsson',
+            'pumpMng': '13',
+            'littNr': '3144',
+            'resTid': '4',
+            'grundavgift' : '1500',
+            'datum' : '2018-06-11',
+            'pumpStart' : '2019-01-01T00:02',
+            'pumpSlut' : '2019-02-01T00:02'
+        }), content_type='application/json')
         self.assertEqual(response.status_code, 201)
 
 def login_auth(self):
