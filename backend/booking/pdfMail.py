@@ -7,6 +7,10 @@ from .models import Bokning
 from datetime import datetime
 import json
 
+import sendgrid
+import os
+from sendgrid.helpers.mail import *
+
 x = 75
 y = 1125
 size = 12
@@ -18,6 +22,8 @@ fontBold = 'Helvetica-Bold'
 def pdfThenMail(bokning):
     filePath = createPdf(bokning)
     try:
+        sg = sendgrid.SendGridAPIClient(apikey=os.environ.get('SENDGRID_API_KEY'))
+        from_email = Email("test@example.com")
         email = EmailMessage(
             #String representation som ämne
             subject=bokning.__str__(),
