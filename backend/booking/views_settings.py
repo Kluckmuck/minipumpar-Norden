@@ -10,7 +10,7 @@ import json
 def targetMail(request):
     if request.method == 'POST':
         try:
-            targetMail = json.loads(request.body.decode())['mail']
+            targetMail = json.loads(request.body.decode())['email']
         except Exception as e:
             return HttpResponseBadRequest(json.dumps({'error': 'Invalid request: {0}'.format(str(e))}), content_type="application/json")
         user = request.user
