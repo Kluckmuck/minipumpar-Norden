@@ -3,11 +3,7 @@ import { Button, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
 import App from './NavBar.jsx'
 import "./Inputs.css"
 
-let header = new Headers({
-  "Content-Type": "application/json; charset=utf-8"
-});
 var site  = 'http://maxjou.se:8000';
-
 class Input extends React.Component {
   constructor(props){
     super(props);
@@ -21,7 +17,8 @@ class Input extends React.Component {
       grundavgift :"",
       datum :"",
       pumpStart :"",
-      pumpSlut:""
+      pumpSlut:"",
+      ovrigInfo:""
     }
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -36,7 +33,6 @@ class Input extends React.Component {
     fetch (site + '/api/bokning/', {
       method: 'POST',
       credentials: 'include',
-      header:header,
       body: JSON.stringify({
       namn:this.state.namn ,
       adress:this.state.adress,
@@ -48,6 +44,7 @@ class Input extends React.Component {
       datum:this.state.datum,
       pumpStart:this.state.pumpStart,
       pumpSlut:this.state.pumpSlut,
+      ovrigInfo:this.state.ovrigInfo,
       })
     }).then(response => {
       if(response.status === 201){
@@ -99,7 +96,7 @@ class Input extends React.Component {
             ></FormControl>
         </FormGroup>
          <FormGroup controlId="littNr" bsSize="large">
-          <ControlLabel>Litermängd:</ControlLabel>
+          <ControlLabel>Littranummer:</ControlLabel>
             <FormControl
             type="number"
             value={this.state.littNr}
@@ -143,6 +140,14 @@ class Input extends React.Component {
             <FormControl
             type="datetime-local"
             value={this.state.pumpSlut}
+            onChange={this.handleChange}
+            ></FormControl>
+        </FormGroup>
+        <FormGroup controlId="ovrigInfo" bsSize="large">
+          <ControlLabel>Övrigt:</ControlLabel>
+            <FormControl
+            componentClass="textarea"
+            value={this.state.ovrigInfo}
             onChange={this.handleChange}
             ></FormControl>
         </FormGroup>
