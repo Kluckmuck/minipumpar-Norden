@@ -29,5 +29,5 @@ urlpatterns = [
     path('mail/', views_pdf.mailBokning),
     path('token/', views.token),
     path('settings/targetMail/', views_settings.targetMail),
-    path('settings/u/<int:id>/', views_settings.getUserInfo)
+    path('settings/user/', views_settings.getUserInfo)
 ]

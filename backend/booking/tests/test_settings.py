@@ -38,7 +38,7 @@ class SettingsTestCase(TestCase):
 
     def test_getUserInfo(self):
         login_auth(self) #Login för @login_required och för att veta av användaren
-        response = self.client.get('/api/settings/u/1/')
+        response = self.client.get('/api/settings/user/')
         self.assertEqual(response.status_code, 200)
 
 

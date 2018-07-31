@@ -28,14 +28,11 @@ def targetMail(request):
     else:
         return HttpResponseNotAllowed(['POST'])
 
-def getUserInfo(request, id):
+def getUserInfo(request):
     if request.method == 'GET':
+        user = request.user
         try:
-            id = int(id)
-        except ValueError as e:
-            return HttpResponseBadRequest(json.dumps({'error': 'Invalid request: {0}'.format(str(e))}), content_type="application/json")
-        try:
-            user = User.objects.get(id=id)
+            user = User.objects.get(username=user)
         except User.DoesNotExist:
             return HttpResponse(status=404)
         return JsonResponse([{'username': user.username, 'last_login': user.last_login, 'first_name': user.first_name,
