@@ -36,7 +36,7 @@ class PdfTestCase(TestCase):
 
     def test_pdfBokning(self):
         login_auth(self) #Login för @login_required
-        response = self.client.get('/api/pdf/bokning/1/')
+        response = self.client.post('/api/bokning/')
         self.assertEqual(response.status_code, 201)
 
 def login_auth(self):

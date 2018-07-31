@@ -8,6 +8,7 @@ from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import ensure_csrf_cookie, csrf_exempt
 
 from .models import Klient, KlientForm, Bokning, BokningForm
+from .pdfMail import pdfThenMail
 import json
 import datetime
 
@@ -63,6 +64,7 @@ def bokning(request):
             bokning.klient = klient
             bokning.maskinist = user
             bokning.save()
+            pdfThenMail(bokning)
             return HttpResponse(status=201)
         else:
             print(bokningForm.errors)
