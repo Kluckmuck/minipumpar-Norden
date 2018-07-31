@@ -21,20 +21,26 @@ class SettingsTestCase(TestCase):
 
     def test_postTargetMail(self):
         login_auth(self) #Login för @login_required och för att veta av användaren
-        response = self.client.post('/api/settings/targetMail/', json.dumps({'mail': 'kluckmucki@gmail.com'}), content_type='application/json')
+        response = self.client.post('/api/settings/targetMail/', json.dumps({'email': 'kluckmucki@gmail.com'}), content_type='application/json')
         self.assertEqual(response.status_code, 201)
         self.assertEqual(User.objects.get(id=1).profile.targetMail, 'kluckmucki@gmail.com')
 
     def test_postBadTargetMail(self):
         login_auth(self) #Login för @login_required och för att veta av användaren
-        response = self.client.post('/api/settings/targetMail/', json.dumps({'mail': 'kluckmucki.gmail.com'}), content_type='application/json')
+        response = self.client.post('/api/settings/targetMail/', json.dumps({'email': 'kluckmucki.gmail.com'}), content_type='application/json')
         self.assertEqual(response.status_code, 400)
 
-        response = self.client.post('/api/settings/targetMail/', json.dumps({'mail': 'kluckmucki@gmail'}), content_type='application/json')
+        response = self.client.post('/api/settings/targetMail/', json.dumps({'email': 'kluckmucki@gmail'}), content_type='application/json')
         self.assertEqual(response.status_code, 400)
 
         response = self.client.post('/api/settings/targetMail/', json.dumps({'maiasdasdl': 'kluckmucki@gmail.com'}), content_type='application/json')
         self.assertEqual(response.status_code, 400)
+
+    def test_getUserInfo(self):
+        login_auth(self) #Login för @login_required och för att veta av användaren
+        response = self.client.get('/api/settings/u/1/')
+        self.assertEqual(response.status_code, 200)
+
 
 def login_auth(self):
     self.client.post('/api/login/', json.dumps({'username': 'Korea', 'password': 'Seoul'}), content_type='application/json')
