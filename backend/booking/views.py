@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.http import HttpResponse, HttpResponseNotAllowed, HttpResponseNotAllowed, JsonResponse, HttpResponseNotFound
+from django.http import HttpResponse, HttpResponseNotAllowed, HttpResponseNotAllowed, JsonResponse, HttpResponseNotFound, HttpResponseBadRequest
 from django.forms.models import model_to_dict
 from django.utils import timezone
 from django.contrib.auth import authenticate, login, logout
@@ -8,6 +8,7 @@ from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import ensure_csrf_cookie, csrf_exempt
 
 from .models import Klient, KlientForm, Bokning, BokningForm
+from .pdfMail import pdfThenMail
 import json
 import datetime
 
@@ -63,7 +64,11 @@ def bokning(request):
             bokning.klient = klient
             bokning.maskinist = user
             bokning.save()
-            return HttpResponse(status=201)
+            val = pdfThenMail(bokning)
+            if val == True:
+                return HttpResponse(status=201)
+            else:
+                return HttpResponseBadRequest(json.dumps({'error': 'Invalid request: {0}'.format(str(val))}), content_type="application/json")
         else:
             print(bokningForm.errors)
             return HttpResponse(status=400)
