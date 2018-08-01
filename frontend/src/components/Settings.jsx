@@ -15,9 +15,18 @@ class Settings extends Component{
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
-  // componentDidMount(){
-  //   fetch(site + '')
-  // }
+
+  //TODO: Get method to work
+  componentDidMount(){
+    console.log("got here");
+    fetch(site + '/setttings/user/',{
+      method: 'GET',
+      credentials: 'include',
+    }).then(response => {
+
+      console.log(response.json() + "hej");
+    })
+  }
 
   validateForm(){
     return this.state.email.length > 0 ;
@@ -29,7 +38,7 @@ class Settings extends Component{
   handleSubmit(e){
     console.log("got here")
     e.preventDefault();
-    fetch (site + '/api/settings/targetmail/',{
+    fetch (site + '/api/settings/targetMail/',{
       method: 'post',
       credentials:'include',
       body: JSON.stringify({
