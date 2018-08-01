@@ -1,7 +1,7 @@
 import React from "react";
 import { Button, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
 import App from './NavBar.jsx'
-import "./Inputs.css"
+import "./css/Inputs.css"
 
 var site  = 'http://maxjou.se:8000';
 class Input extends React.Component {
@@ -49,6 +49,7 @@ class Input extends React.Component {
     }).then(response => {
       if(response.status === 201){
         console.log("Succesfully posted")
+        this.props.history.push('/confirmationPage')
       }
       if(response.status === 404){
         alert("NOT LOGGED IN")

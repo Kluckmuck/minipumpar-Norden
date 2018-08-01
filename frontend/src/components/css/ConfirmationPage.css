@@ -1,0 +1,23 @@
+@media all and (min-width: 480px) {
+    .ConfirmationPage {
+      padding: 60px 0;
+    }
+  
+    .ConfirmationPage form {
+      margin: 0 auto;
+      max-width: 320px;
+    }
+  
+    .ConfirmationPage h1 {
+      margin: 50px auto;
+      padding: 80 px;
+      max-width: 320px;
+    }
+    .ConfirmationPage p {
+      margin: 50px auto;
+      padding: 80 px;
+      max-width: 320px;
+    }
+  
+    
+  }
