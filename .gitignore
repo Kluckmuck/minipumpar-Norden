@@ -35,3 +35,4 @@ chrome-user-data
 .idea
 *.iml
 *-pyc
+sendgrid.env
