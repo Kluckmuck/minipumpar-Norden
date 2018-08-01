@@ -35,3 +35,4 @@ chrome-user-data
 .idea
 *.iml
 *-pyc
+*.cpython-36

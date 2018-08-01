@@ -3,6 +3,8 @@ from django.contrib.auth.models import User
 from django.core import mail
 
 from ..models import Klient, Bokning
+from ..pdfMail import createPdf
+
 import json
 
 # Create your tests here.
@@ -34,31 +36,26 @@ class PdfTestCase(TestCase):
 
         cls.client = Client()
 
-    def test_send_email(self):
-        login_auth(self) #Login för @login_required
-        # Send message.
-        response = self.client.post('/api/mail/', json.dumps({'bokning': '1', 'recipient': 'kluckmucki@gmail.com', 'sender': 'max.jourdanis@gmail.com'}), content_type='application/json')
-
-        self.assertEqual(response.status_code, 200)
-        # Test that one message has been sent.
-        self.assertEqual(len(mail.outbox), 1)
-
-        # Verify that the subject of the first message is correct.
-        self.assertEqual(mail.outbox[0].subject, 'subject')
-        # Veryfy attachment
-        self.assertEqual(mail.outbox[0].attachments[0][0], '2018-07-09(1).pdf')
-
-        # POST without recipient field
-        response = self.client.post('/api/mail/', json.dumps({'bokning': '1', 'user': 'max.jourdanis@gmail.com'}), content_type='application/json')
-        self.assertEqual(response.status_code, 400)
-        # POST with blank recipient
-        response = self.client.post('/api/mail/', json.dumps({'bokning': '1', 'recipient': '', 'user': 'max.jourdanis@gmail.com'}), content_type='application/json')
-        self.assertEqual(response.status_code, 400)
-
     def test_pdfBokning(self):
         login_auth(self) #Login för @login_required
-        response = self.client.get('/api/pdf/bokning/1/')
+        #Posta minimal bokning
+        response = self.client.post('/api/bokning/', json.dumps({
+            'namn': '  Minipump AB   ',
+            'adress':'Pumpgatan 20    ',
+            'kontakt' :'Zara Larsson',
+            'pumpMng': '13',
+            'littNr': '3144',
+            'resTid': '4',
+            'grundavgift' : '1500',
+            'datum' : '2018-06-11',
+            'pumpStart' : '2019-01-01T00:02',
+            'pumpSlut' : '2019-02-01T00:02'
+        }), content_type='application/json')
         self.assertEqual(response.status_code, 201)
+
+    def test_createPdf(self):
+        b = Bokning.objects.get(id=1)
+        createPdf(b)
 
 def login_auth(self):
     self.client.post('/api/login/', json.dumps({'username': 'Korea', 'password': 'Seoul'}), content_type='application/json')

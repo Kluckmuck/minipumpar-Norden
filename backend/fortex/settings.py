@@ -65,6 +65,7 @@ CORS_ALLOW_CREDENTIALS = True
 CORS_ORIGIN_WHITELIST = (
     'maxjou.se',
     'localhost:3000',
+
 )
 
 TEMPLATES = [
