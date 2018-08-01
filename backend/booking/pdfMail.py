@@ -21,10 +21,24 @@ font = 'Helvetica'
 fontBold = 'Helvetica-Bold'
 
 def pdfThenMail(bokning):
-    filePath = createPdf(bokning)
+    filePath = createPdf(bokning) #Create PDF, returns filepath
     try:
+        with open(filePath, 'rb') as f:
+            data = f.read()
+
+        # Encode contents of file as Base 64
+        encoded = base64.b64encode(data).decode()
+
+        # Build attachment
+        attachment = Attachment()
+        attachment.content = encoded
+        attachment.type = "application/pdf"
+        attachment.filename = "my_pdf_attachment.pdf" #str(bokning.datum)
+        attachment.disposition = "attachment"
+        attachment.content_id = "PDF Document file"
+
         sg = sendgrid.SendGridAPIClient(apikey=os.environ.get('SENDGRID_API_KEY'))
-        print(os.environ.get('SENDGRID_API_KEY'))
+        print(  os.environ.get('SENDGRID_API_KEY'))
         from_email = Email("service@algit.se")
         subject = bokning.__str__()
         #to_email = Email(bokning.maskinist.profile.targetMail)
@@ -32,7 +46,7 @@ def pdfThenMail(bokning):
         content = Content("text/html", "hej")
 
         mail = Mail(from_email, subject, to_email, content)
-
+        mail.add_attachment(attachment)
         response = sg.client.mail.send.post(request_body=mail.get())
 
         print(response.status_code)
