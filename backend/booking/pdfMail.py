@@ -84,6 +84,8 @@ def drawFooter(c):
     global x
     c.setFont("Helvetica-Oblique", size)
     c.drawString(x,20, "Utvecklad av Älg IT Handelsbolag, 0706566805")
+    logo = os.path.abspath('./static/images/Watercolor_Moose.jpg')
+    c.drawImage(logo,x+300,20, 150, 150)
 
 def getHourMinute(time):
     #Appends zero if minute is 0-9
