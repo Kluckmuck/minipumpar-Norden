@@ -26,5 +26,6 @@ urlpatterns = [
     path('logout/', views.logoutView),
     path('change-password/', auth_views.PasswordChangeView.as_view()),
     path('token/', views.token),
-    path('settings/targetMail/', views_settings.targetMail)
+    path('settings/targetMail/', views_settings.targetMail),
+    path('settings/user/', views_settings.getUserInfo)
 ]

@@ -34,8 +34,8 @@ var site  = 'http://maxjou.se:8000';
   handleSubmit(event) {
     event.preventDefault();
     fetch (site + '/api/login/', {
-
       method: 'post',
+      credentials: 'include',
       header:header,
       body: JSON.stringify({
         username: this.state.username,
@@ -43,6 +43,7 @@ var site  = 'http://maxjou.se:8000';
       })
     }).then(response => {
       if(response.status === 200){
+        console.log(response.status);
       this.props.history.push('/inputs')
     }else if (response.status === 401){
         alert("Ogiltligt användarnamn och/eller lösenord");

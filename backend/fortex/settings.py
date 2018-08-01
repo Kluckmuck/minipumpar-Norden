@@ -52,12 +52,20 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'fortex.urls'
 
-# CORS MAGIC
+#MAIL
+EMAIL_HOST = 'smtp.sendgrid.net'
+EMAIL_PORT = 465
+EMAIL_HOST_USER = 'apikey'
+EMAIL_HOST_PASSWORD = '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'
+EMAIL_USE_TLS = True
+
+#CORS MAGIC
 CORS_ORIGIN_ALLOW_ALL = False
 CORS_ALLOW_CREDENTIALS = True
 CORS_ORIGIN_WHITELIST = (
     'maxjou.se',
-    'localhost:3000/',
+    'localhost:3000',
+
 )
 
 TEMPLATES = [

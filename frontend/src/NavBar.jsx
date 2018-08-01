@@ -1,10 +1,10 @@
 
 import React, {Component }from "react";
 import { Link } from "react-router-dom";
-import {  Navbar , NavItem, Nav, NavDropdown, MenuItemLink, MenuItem} from "react-bootstrap";
+import {  Navbar , Nav, NavItem} from "react-bootstrap";
 import "./NavBar.css";
 
-var FontAwesome = require('react-fontawesome');
+
  class NavBar extends Component {
    render (){
    return  <div className="container">
@@ -16,11 +16,10 @@ var FontAwesome = require('react-fontawesome');
            <Navbar.Toggle />
          </Navbar.Header>
          <Navbar.Collapse>
-           <Nav>
-           <NavDropdown title="Inställningar" >
-           
-             <Link to="/"> <MenuItem>Settings</MenuItem></Link>
-           </NavDropdown>
+           <Nav className="nav navbar-nav navbar-right navbar-center">
+           <NavItem title="Inställningar" componentClass="span" >
+             <Link to="/settings"> Inställningar</Link>
+           </NavItem>
           </Nav>
          </Navbar.Collapse>
        </Navbar>
@@ -28,4 +27,3 @@ var FontAwesome = require('react-fontawesome');
     }
 }
 export default NavBar;
-

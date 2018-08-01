@@ -3,6 +3,8 @@ import "./Settings.css"
 import { FormControl, ControlLabel, FormGroup, Button } from "react-bootstrap";
 import NavBar from "../NavBar.jsx";
 
+
+var site  = 'http://maxjou.se:8000';
 class Settings extends Component{
   constructor(props) {
     super(props);
@@ -10,8 +12,12 @@ class Settings extends Component{
     this.state = {
       email:""
     }
-    this.handleChange = this.handleChange.bind(this)
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
+  // componentDidMount(){
+  //   fetch(site + '')
+  // }
 
   validateForm(){
     return this.state.email.length > 0 ;
@@ -21,11 +27,20 @@ class Settings extends Component{
     this.setState({[e.target.id]: e.target.value});
   }
   handleSubmit(e){
-
+    console.log("got here")
     e.preventDefault();
-
+    fetch (site + '/api/settings/targetmail/',{
+      method: 'post',
+      credentials:'include',
+      body: JSON.stringify({
+        email: this.state.email
+      })
+    }).then(response => {
+      console.log(response.status);
+    })
     console.log()
   }
+
 
 
   render(){
@@ -33,6 +48,7 @@ class Settings extends Component{
       <h1>Inställningar</h1>
       <NavBar/>
       <p>Här kan du skriva in den mail som fakturan skall skickas.</p>
+      <p>Just nu skickas fakturan till: </p>
       <form onSubmit={this.handleSubmit}>
         <FormGroup controlId="email" bsSize="large">
           <ControlLabel>Email </ControlLabel>
@@ -46,6 +62,7 @@ class Settings extends Component{
         block
         bsSize="large"
         disabled={!this.validateForm()}
+        type="submit"
         >Ändra
         </Button>
 
