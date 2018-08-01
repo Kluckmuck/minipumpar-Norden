@@ -3,6 +3,8 @@ from django.contrib.auth.models import User
 from django.core import mail
 
 from ..models import Klient, Bokning
+from ..pdfMail import createPdf
+
 import json
 
 # Create your tests here.
@@ -50,6 +52,10 @@ class PdfTestCase(TestCase):
             'pumpSlut' : '2019-02-01T00:02'
         }), content_type='application/json')
         self.assertEqual(response.status_code, 201)
+
+    def test_createPdf(self):
+        b = Bokning.objects.get(id=1)
+        createPdf(b)
 
 def login_auth(self):
     self.client.post('/api/login/', json.dumps({'username': 'Korea', 'password': 'Seoul'}), content_type='application/json')
