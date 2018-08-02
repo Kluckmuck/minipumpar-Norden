@@ -2,10 +2,13 @@
 import React, {Component }from "react";
 import { Link } from "react-router-dom";
 import {  Navbar , Nav, NavItem} from "react-bootstrap";
-import "./NavBar.css";
+import "./css/NavBar.css";
 
 
  class NavBar extends Component {
+
+
+  
    render (){
    return  <div className="container">
        <Navbar fluid collapseOnSelect>
@@ -19,6 +22,13 @@ import "./NavBar.css";
            <Nav className="nav navbar-nav navbar-right navbar-center">
            <NavItem title="Inställningar" componentClass="span" >
              <Link to="/settings"> Inställningar</Link>
+           </NavItem>
+          </Nav>
+         </Navbar.Collapse>
+         <Navbar.Collapse>
+           <Nav className="nav navbar-nav navbar-right navbar-center">
+           <NavItem title="Inställningar" componentClass="span" >
+             <Link to="/logout"> Logga ut</Link>
            </NavItem>
           </Nav>
          </Navbar.Collapse>
