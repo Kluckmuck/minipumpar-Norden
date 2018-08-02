@@ -47,8 +47,6 @@ def pdfThenMail(bokning):
         mail.add_attachment(attachment)
         response = sg.client.mail.send.post(request_body=mail.get())
     except Exception as e:
-        print(os.environ.get('SENDGRID_API_KEY'))
-        print(e)
         return e
     return True
 
