@@ -15,17 +15,16 @@ class Settings extends Component{
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
-
-  //TODO: Get method to work
+  
+  //TODO:  remove all logs and change to functions. 
   componentDidMount(){
-    console.log("got here");
-    fetch(site + '/setttings/user/',{
-      method: 'GET',
-      credentials: 'include',
-    }).then(response => {
-
-      console.log(response.json() + "hej");
-    })
+    fetch(site + '/api/settings/user/',{
+      credentials:'include'
+    }).then(response => { 
+      return response.json()}).then(result =>{
+        this.setState({email: result[0].targetMail})
+        console.log(this.state.email);
+      })
   }
 
   validateForm(){
@@ -47,7 +46,6 @@ class Settings extends Component{
     }).then(response => {
       console.log(response.status);
     })
-    console.log()
   }
 
 
@@ -57,7 +55,7 @@ class Settings extends Component{
       <h1>Inställningar</h1>
       <NavBar/>
       <p>Här kan du skriva in den mail som fakturan skall skickas.</p>
-      <p>Just nu skickas fakturan till: </p>
+      <p>Just nu skickas fakturan till: <strong>{this.state.email}</strong></p>
       <form onSubmit={this.handleSubmit}>
         <FormGroup controlId="email" bsSize="large">
           <ControlLabel>Email </ControlLabel>
