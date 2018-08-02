@@ -40,14 +40,15 @@ def pdfThenMail(bokning):
         sg = sendgrid.SendGridAPIClient(apikey=os.environ.get('SENDGRID_API_KEY'))
         from_email = Email("service@algit.se")
         subject = bokning.__str__()
-        #to_email = Email(bokning.maskinist.profile.targetMail)
-        to_email = Email("kluckmucki@gmail.com")
+        to_email = Email(bokning.maskinist.profile.targetMail)
         content = Content("text/html", "<p>Det här mailet går ej att svara på.</p><p>Vid frågor kan ni nå Älg IT på 070-656 68 05</p>")
 
         mail = Mail(from_email, subject, to_email, content)
         mail.add_attachment(attachment)
         response = sg.client.mail.send.post(request_body=mail.get())
     except Exception as e:
+        print(os.environ.get('SENDGRID_API_KEY'))
+        print(e)
         return e
     return True
 
