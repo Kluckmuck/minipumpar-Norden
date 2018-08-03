@@ -10,19 +10,20 @@ import "./css/NavBar.css";
    return  <Navbar fluid collapseOnSelect>
              <Navbar.Header>
                <Navbar.Brand>
+                Minipumpar
                </Navbar.Brand>
                <Navbar.Toggle />
              </Navbar.Header>
              <Navbar.Collapse>
                <Nav pullRight>
                <LinkContainer to="/inputs">
-                 <NavItem eventKey={1}><FaTasks /> Ny bokning</NavItem>
+                 <NavItem eventKey={1}><FaTasks className="NavBarIcon" /> Ny bokning</NavItem>
                </LinkContainer>
                 <LinkContainer to="/settings">
-                  <NavItem eventKey={2}><FaCogs /> Inställningar</NavItem>
+                  <NavItem eventKey={2}><FaCogs className="NavBarIcon" /> Inställningar</NavItem>
                 </LinkContainer>
                 <LinkContainer to="/">
-                  <NavItem eventKey={3}><FaSignOutAlt /> Logga ut</NavItem>
+                  <NavItem eventKey={3}><FaSignOutAlt className="NavBarIcon" /> Logga ut</NavItem>
                 </LinkContainer>
               </Nav>
              </Navbar.Collapse>

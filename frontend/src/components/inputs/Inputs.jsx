@@ -1,7 +1,9 @@
 import React from "react";
 import { Button, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
-import App from './NavBar.jsx'
-import "./css/Inputs.css"
+import NavBar from './../NavBar.jsx'
+import "./../css/Inputs.css"
+import { FaThList } from "react-icons/fa";
+
 
 var site  = 'http://maxjou.se:8000';
 class Input extends React.Component {
@@ -27,7 +29,7 @@ class Input extends React.Component {
   handleChange(e){
     this.setState({[e.target.id]: e.target.value});
  }
-
+//TODO:  alert when logged in or not.
  handleSubmit (event){
     event.preventDefault();
     fetch (site + '/api/bokning/', {
@@ -48,21 +50,19 @@ class Input extends React.Component {
       })
     }).then(response => {
       if(response.status === 201){
-        console.log("Succesfully posted")
         this.props.history.push('/confirmationPage')
       }
       if(response.status === 404){
         alert("NOT LOGGED IN")
       }
-      console.log(response.status);
     })
   }
 
   render() {
     return(
     <div className="Inputs">
-    <h1>Minipumpar</h1>
-    <App/>
+      <br/>
+    <NavBar/>
       <form onSubmit = {this.handleSubmit}>
         <FormGroup controlId="namn" bsSize="large">
           <ControlLabel>Namn:</ControlLabel>
@@ -124,14 +124,14 @@ class Input extends React.Component {
           <ControlLabel>Datum:</ControlLabel>
             <FormControl
             type="date"
-            value={this.state.datum}
+            defaultValue={this.state.datum}
             onChange={this.handleChange}
             ></FormControl>
         </FormGroup>
         <FormGroup controlId="pumpStart" bsSize="large">
           <ControlLabel>Pump Start:</ControlLabel>
             <FormControl
-            type="datetime-local"
+            type="time"
             value={this.state.pumpStart}
             onChange={this.handleChange}
             ></FormControl>
@@ -139,7 +139,7 @@ class Input extends React.Component {
         <FormGroup controlId="pumpSlut" bsSize="large">
           <ControlLabel>Pump Slut:</ControlLabel>
             <FormControl
-            type="datetime-local"
+            type="time"
             value={this.state.pumpSlut}
             onChange={this.handleChange}
             ></FormControl>
@@ -160,6 +160,8 @@ class Input extends React.Component {
             Skicka
           </Button>
       </form>
+      <br/>
+
     </div>);
   }
 }

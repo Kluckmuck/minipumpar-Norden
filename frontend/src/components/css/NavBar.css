@@ -5,3 +5,6 @@
   .App .navbar-brand {
     font-weight: bold;
   }
+  .NavBarIcon {
+    margin-right: 5px;
+  }
