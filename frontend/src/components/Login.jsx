@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Button, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
+import { Button, FormGroup, FormControl, ControlLabel, Grid, Row, Col } from "react-bootstrap";
 import { withRouter } from "react-router-dom";
 import "./css/Login.css";
 
@@ -52,36 +52,46 @@ var site  = 'http://maxjou.se:8000';
   }
   render() {
     return (
-      <div className="Login">
-        <h1>Login</h1>
-          <form onSubmit={this.handleSubmit}>
-            <FormGroup controlId="username" bsSize="large">
-              <ControlLabel>Email</ControlLabel>
-              <FormControl
-                autoFocus
-                type="email"
-                value={this.state.username}
-                onChange={this.handleChange}
-              />
-            </FormGroup>
-            <FormGroup controlId="password" bsSize="large">
-              <ControlLabel>Password</ControlLabel>
-              <FormControl
-                value={this.state.password}
-                onChange={this.handleChange}
-                type="password"
-              />
-            </FormGroup>
-            <Button
-              block
-              bsSize="large"
-              disabled={!this.validateForm()}
-              type="submit"
-            >
-              Login
-            </Button>
-          </form>
-      </div>
+      <Grid>
+        <Row className="show-grid">
+          <Col xs={2} md={4}>
+          </Col>
+          <Col xs={8} md={4}>
+            <div className="Login">
+              <h1>Login</h1>
+                <form onSubmit={this.handleSubmit}>
+                  <FormGroup controlId="username" bsSize="large">
+                    <ControlLabel>Email</ControlLabel>
+                    <FormControl
+                      autoFocus
+                      type="email"
+                      value={this.state.username}
+                      onChange={this.handleChange}
+                    />
+                  </FormGroup>
+                  <FormGroup controlId="password" bsSize="large">
+                    <ControlLabel>Password</ControlLabel>
+                    <FormControl
+                      value={this.state.password}
+                      onChange={this.handleChange}
+                      type="password"
+                    />
+                  </FormGroup>
+                  <Button
+                    block
+                    bsSize="large"
+                    disabled={!this.validateForm()}
+                    type="submit"
+                  >
+                    Login
+                  </Button>
+                </form>
+            </div>
+          </Col>
+          <Col xs={2} md={4}>
+        </Col>
+        </Row>
+      </Grid>
   );
 }
 
