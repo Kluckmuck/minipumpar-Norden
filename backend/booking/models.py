@@ -51,8 +51,8 @@ class KlientForm(forms.ModelForm):
         fields = ['namn', 'adress', 'kontakt']
 
 class BokningForm(forms.ModelForm):
-    pumpStart = forms.DateTimeField(input_formats=['%Y-%m-%dT%H:%M'])
-    pumpSlut = forms.DateTimeField(input_formats=['%Y-%m-%dT%H:%M'])
+    pumpStart = forms.DateTimeField(input_formats=['%H:%M'])
+    pumpSlut = forms.DateTimeField(input_formats=['%H:%M'])
     class Meta:
         model = Bokning
         fields = [
