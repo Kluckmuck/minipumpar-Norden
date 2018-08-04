@@ -1,12 +1,11 @@
-import React from "react";
+import React, { Component } from "react";
 import { Button, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
+import { withRouter } from "react-router-dom";
 import NavBar from './../NavBar.jsx'
 import "./../css/Inputs.css"
-import { FaThList } from "react-icons/fa";
-
 
 var site  = 'http://maxjou.se:8000';
-class Input extends React.Component {
+class Input extends Component {
   constructor(props){
     super(props);
     this.state ={
@@ -36,17 +35,17 @@ class Input extends React.Component {
       method: 'POST',
       credentials: 'include',
       body: JSON.stringify({
-      namn:this.state.namn ,
-      adress:this.state.adress,
-      kontakt:this.state.kontakt,
-      pumpMng:this.state.pumpMng,
-      littNr:this.state.littNr,
-      resTid:this.state.resTid,
-      grundavgift:this.state.grundavgift,
-      datum:this.state.datum,
-      pumpStart:this.state.pumpStart,
-      pumpSlut:this.state.pumpSlut,
-      ovrigInfo:this.state.ovrigInfo,
+        namn:this.state.namn ,
+        adress:this.state.adress,
+        kontakt:this.state.kontakt,
+        pumpMng:this.state.pumpMng,
+        littNr:this.state.littNr,
+        resTid:this.state.resTid,
+        grundavgift:this.state.grundavgift,
+        datum:this.state.datum,
+        pumpStart:this.state.pumpStart,
+        pumpSlut:this.state.pumpSlut,
+        ovrigInfo:this.state.ovrigInfo,
       })
     }).then(response => {
       if(response.status === 201){
@@ -166,5 +165,4 @@ class Input extends React.Component {
   }
 }
 
-export default  Input;
-
+export default withRouter(Input);

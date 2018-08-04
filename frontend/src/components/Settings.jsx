@@ -3,7 +3,6 @@ import "./css/Settings.css"
 import { FormControl, ControlLabel, FormGroup, Button, Modal } from "react-bootstrap";
 import NavBar from "./NavBar.jsx";
 
-var date =  new Date().now;
 var site  = 'http://maxjou.se:8000';
 class Settings extends Component{
   constructor(props) {
@@ -21,7 +20,7 @@ class Settings extends Component{
   componentDidMount(){
     fetch(site + '/api/settings/user/',{
       credentials:'include'
-    }).then(response => { 
+    }).then(response => {
       return response.json()}).then(result =>{
         this.setState({email: result[0].targetMail})
       })
@@ -44,7 +43,7 @@ class Settings extends Component{
       })
     })
   }
-  
+
   handleClose(){
     this.setState({show: false})
   }
@@ -88,7 +87,7 @@ class Settings extends Component{
             </Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            Eposten är ändrad. 
+            Eposten är ändrad.
           </Modal.Body>
           <Modal.Footer>
             <Button onClick={this.handleClose}>Stäng</Button>
@@ -100,6 +99,6 @@ class Settings extends Component{
 
     )
   }
-} 
+}
 
 export default Settings;
