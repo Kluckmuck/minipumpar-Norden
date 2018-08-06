@@ -65,7 +65,7 @@ class Input extends Component {
     <NavBar/>
       <form onSubmit = {this.handleSubmit}>
         <FormGroup controlId="namn" bsSize="large">
-          <ControlLabel>Namn:</ControlLabel>
+          <ControlLabel>Kund:</ControlLabel>
             <FormControl
             type="text"
             value={this.state.namn}
