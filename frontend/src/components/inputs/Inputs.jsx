@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import { Button, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
 import { withRouter } from "react-router-dom";
-import NavBar from './../NavBar.jsx'
-import "./../css/Inputs.css"
+import NavBar from './../NavBar.jsx';
+import "./../css/Inputs.css";
 
 var site  = 'http://maxjou.se:8000';
 class Input extends Component {
@@ -16,7 +16,7 @@ class Input extends Component {
       littNr: "",
       resTid: "",
       grundavgift :"",
-      datum :"",
+      datum : "",
       pumpStart :"",
       pumpSlut:"",
       ovrigInfo:""
@@ -25,10 +25,11 @@ class Input extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
+
+
   handleChange(e){
     this.setState({[e.target.id]: e.target.value});
  }
-//TODO:  alert when logged in or not.
  handleSubmit (event){
     event.preventDefault();
     fetch (site + '/api/bokning/', {
@@ -87,6 +88,8 @@ class Input extends Component {
             onChange={this.handleChange}
             ></FormControl>
         </FormGroup>
+        <br/>
+        <br/>
         <FormGroup controlId="pumpMng" bsSize="large">
           <ControlLabel>Pumpmängd:</ControlLabel>
             <FormControl
@@ -119,11 +122,13 @@ class Input extends Component {
             onChange={this.handleChange}
             ></FormControl>
         </FormGroup>
+        <br/>
+        <br/>
         <FormGroup controlId="datum" bsSize="large">
           <ControlLabel>Datum:</ControlLabel>
             <FormControl
             type="date"
-            defaultValue={this.state.datum}
+            value={this.state.datum}
             onChange={this.handleChange}
             ></FormControl>
         </FormGroup>
@@ -143,6 +148,8 @@ class Input extends Component {
             onChange={this.handleChange}
             ></FormControl>
         </FormGroup>
+        <br/>
+        <br/>
         <FormGroup controlId="ovrigInfo" bsSize="large">
           <ControlLabel>Övrigt:</ControlLabel>
             <FormControl
