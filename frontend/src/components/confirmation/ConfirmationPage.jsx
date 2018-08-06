@@ -1,9 +1,9 @@
 import React, {Component} from "react";
-import Login from "./Login.jsx"
+import Confirmation from "./Confirmation.jsx"
 import{Grid,Row,Col} from "react-bootstrap"
 import { withRouter } from "react-router-dom";
 
-class LoginPage extends Component{
+class ConfirmationPage extends Component{
 
   render(){
     return (
@@ -12,7 +12,7 @@ class LoginPage extends Component{
           <Col xs={1} md={2}>
             </Col>
               <Col xs={10} md={8}>
-                  <Login/>
+                  <Confirmation/>
               </Col>
             <Col xs={1} md={2}>
           </Col>
@@ -22,4 +22,4 @@ class LoginPage extends Component{
   }
 }
 
-export default withRouter(LoginPage);
+export default withRouter(ConfirmationPage);

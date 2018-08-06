@@ -10,12 +10,12 @@ class InputPage extends Component{
     return (
     <Grid>
       <Row className="show-grid">
-        <Col xs={2} md={4}>
+        <Col xs={1} md={2}>
           </Col>
-            <Col xs={8} md={4}>
+            <Col xs={10} md={8}>
                 <Inputs/>
             </Col>
-          <Col xs={2} md={4}>
+          <Col xs={1} md={2}>
         </Col>
       </Row>
     </Grid>

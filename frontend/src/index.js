@@ -7,7 +7,7 @@ import Inputs from "./components/inputs/InputPage.jsx";
 import Settings from "./components/SettingsPage.jsx";
 import { HashRouter as Router, Route } from 'react-router-dom';
 import registerServiceWorker from './registerServiceWorker';
-import ConfirmationPage from "./components/ConfirmationPage.jsx";
+import ConfirmationPage from "./components/confirmation/ConfirmationPage.jsx";
 
 ReactDOM.render(  <Router>
     <div>

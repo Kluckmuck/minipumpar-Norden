@@ -21,13 +21,14 @@
 
  
   .modal-container {
-    position: relative;
+    /* position: relative;
+    widows: 50px; */
   }
   .modal-container .modal, .modal-container .modal-backdrop {
-    position: absolute;
+    /* position: absolute;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%) !important;
+    transform: translate(-50%, -50%) !important; */
   }
 
 
