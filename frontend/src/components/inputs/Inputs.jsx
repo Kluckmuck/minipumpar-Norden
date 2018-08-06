@@ -101,7 +101,7 @@ class Input extends Component {
          <FormGroup controlId="littNr" bsSize="large">
           <ControlLabel>Littranummer:</ControlLabel>
             <FormControl
-            type="number"
+            type="text"
             value={this.state.littNr}
             onChange={this.handleChange}
             ></FormControl>
