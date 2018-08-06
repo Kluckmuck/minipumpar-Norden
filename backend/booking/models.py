@@ -33,7 +33,7 @@ class Bokning(models.Model):
     klient = models.ForeignKey('Klient', on_delete=models.CASCADE)
     slangStr = models.IntegerField(null=True, blank=True)
     maskinist = models.ForeignKey(User, on_delete=models.CASCADE)
-    pumpMng = models.DecimalField()
+    pumpMng = models.DecimalField(max_digits=9, decimal_places=2)
     datum = models.DateField()
     littNr = models.CharField(max_length=124)
     resTid = models.IntegerField()
