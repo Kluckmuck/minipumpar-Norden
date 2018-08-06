@@ -1,6 +1,7 @@
 from django.test import TestCase, Client
 from django.contrib.auth.models import User
 from django.core import mail
+import os
 
 from ..models import Klient, Bokning
 from ..pdfMail import createPdf
@@ -48,10 +49,11 @@ class PdfTestCase(TestCase):
             'resTid': '4',
             'grundavgift' : '1500',
             'datum' : '2018-06-11',
-            'pumpStart' : '2019-01-01T00:02',
-            'pumpSlut' : '2019-02-01T00:02'
+            'pumpStart' : '00:02',
+            'pumpSlut' : '00:02'
         }), content_type='application/json')
         self.assertEqual(response.status_code, 201)
+        self.assertEqual(os.path.exists('2018-06-11(2)'), False)
 
     def test_createPdf(self):
         b = Bokning.objects.get(id=1)

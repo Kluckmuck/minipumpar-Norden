@@ -13,7 +13,7 @@ import base64
 from sendgrid.helpers.mail import *
 
 x = 75
-y = 775
+y = 725
 size = 12
 lineHeight = 25
 lineWidth = 145
@@ -46,6 +46,8 @@ def pdfThenMail(bokning):
         mail = Mail(from_email, subject, to_email, content)
         mail.add_attachment(attachment)
         response = sg.client.mail.send.post(request_body=mail.get())
+
+        silentRemove(filePath)
     except Exception as e:
         return e
     return True
@@ -125,3 +127,11 @@ def drawFields(c, bokning):
             else:
                 drawValue(c,value)
         y = y - lineHeight
+
+def silentRemove(filePath):
+    try:
+        print('hej')
+        os.remove(filePath)
+    except OSError as e:
+        print ('Could not remove file: ' + filePath)
+        print(e)
