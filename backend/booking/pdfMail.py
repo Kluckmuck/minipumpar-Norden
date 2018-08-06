@@ -13,7 +13,7 @@ import base64
 from sendgrid.helpers.mail import *
 
 x = 75
-y = 725
+y = 775
 size = 12
 lineHeight = 25
 lineWidth = 145
