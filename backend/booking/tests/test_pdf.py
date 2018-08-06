@@ -34,6 +34,19 @@ class PdfTestCase(TestCase):
             pumpStart='2018-07-09 13:00:13',
             pumpSlut='2018-07-09 14:15:13'
         )
+        Bokning.objects.create(
+            klient=klient,
+            pumpMng='20',
+            littNr='1234',
+            resTid='2',
+            grundavgift='1000',
+            slangStr=None,
+            maskinist=user,
+            ovrigInfo='Extra tungt idag!',
+            datum='2017-03-04',
+            pumpStart='2018-07-09 13:00:13',
+            pumpSlut='2018-07-09 14:15:13'
+        )
 
         cls.client = Client()
 
@@ -56,8 +69,9 @@ class PdfTestCase(TestCase):
         self.assertEqual(os.path.exists('2018-06-11(2)'), False)
 
     def test_createPdf(self):
-        b = Bokning.objects.get(id=1)
-        createPdf(b)
+        #Create two PDFs. Test if they both look ok!
+        createPdf(Bokning.objects.get(id=1))
+        createPdf(Bokning.objects.get(id=2))
 
 def login_auth(self):
     self.client.post('/api/login/', json.dumps({'username': 'Korea', 'password': 'Seoul'}), content_type='application/json')

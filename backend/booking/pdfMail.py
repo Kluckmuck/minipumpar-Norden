@@ -4,6 +4,7 @@ from django.core.mail import EmailMessage, BadHeaderError
 from reportlab.pdfgen import canvas
 
 from .models import Bokning
+from .pdf import Pdf
 from datetime import datetime
 import json
 
@@ -19,6 +20,8 @@ lineHeight = 25
 lineWidth = 145
 font = 'Helvetica'
 fontBold = 'Helvetica-Bold'
+pdf = Pdf(x, y, size, lineHeight, lineWidth, font, fontBold)
+
 
 def pdfThenMail(bokning):
     filePath = createPdf(bokning) #Create PDF, returns filepath
@@ -64,7 +67,7 @@ def createPdf(bokning, response=None):
         filePath = "pdf/" + str(bokning.datum) + "(" + str(bokning.id) + ").pdf"
         c = canvas.Canvas(filePath)
     #Font
-    c.setFont(font, 12)
+    c.setFont(pdf.font, 12)
     drawHeader(c)
     drawFields(c, bokning)
     drawFooter(c)
@@ -72,19 +75,18 @@ def createPdf(bokning, response=None):
     # Close the PDF object cleanly, and we're done.
     c.showPage()
     c.save()
+    resetPdf() #restores pdf values
     return filePath
 
 def drawHeader(c):
     #Header for PDF
-    global x,y
-    c.drawString(x,y, "Telefon: 070-557 66 38 - info@minipumpar - orgnr 556851-2809")
-    y = y - 40
+    c.drawString(pdf.x, pdf.y, "Telefon: 070-557 66 38 - info@minipumpar - orgnr 556851-2809")
+    pdf.y = pdf.y - 40
 
 def drawFooter(c):
     #Footer for PDF
-    global x
-    c.setFont("Helvetica-Oblique", size)
-    c.drawString(x,20, "Utvecklad av Älg IT Handelsbolag, 0706566805")
+    c.setFont("Helvetica-Oblique", pdf.size)
+    c.drawString(pdf.x, 20, "Utvecklad av Älg IT Handelsbolag, 0706566805")
 
 def getHourMinute(time):
     #Appends zero if minute is 0-9
@@ -95,26 +97,28 @@ def getHourMinute(time):
     return time
 
 def drawValue(c,string):
-    c.setFont(font, size)
-    c.drawString(x+lineWidth,y,string)
+    c.setFont(pdf.font, pdf.size)
+    c.drawString(pdf.x+pdf.lineWidth, pdf.y,string)
 
 def drawFields(c, bokning):
     #Body of PDF
-    global x,y
-    #Stores all field names in a list
+    #Stores field names in a list
     fields = [f.name for f in bokning._meta.get_fields()]
     for i,n in enumerate(fields):
         #Draws each field name in bold text & capitalizes the first letter
         c.setFont(fontBold, size)
-        c.drawString(x,y,fields[i].title())
+        c.drawString(pdf.x,pdf.y,fields[i].title() + ':')
         if fields[i] is 'pumpStart':
             drawValue(c,getHourMinute(getattr(bokning,fields[i])))
         elif fields[i] is 'pumpSlut':
             drawValue(c,getHourMinute(getattr(bokning,fields[i])))
         #Draw total time draw
         elif fields[i] is 'ovrigInfo':
-            y = y - lineHeight
-            c.drawString(x,y, 'Total tid')
+            drawValue(c,str(getattr(bokning,fields[i])))
+            pdf.y = pdf.y - pdf.lineHeight
+            c.setFont(fontBold, size)
+            c.drawString(pdf.x,pdf.y, 'Total tid')
+            c.setFont(font, size)
             startTime = getattr(bokning,fields[i-2])
             endTime = getattr(bokning,fields[i-1])
             drawValue(c,str(endTime-startTime)[:-3])
@@ -126,11 +130,19 @@ def drawFields(c, bokning):
                 pass
             else:
                 drawValue(c,value)
-        y = y - lineHeight
+        pdf.y = pdf.y - pdf.lineHeight
+
+def resetPdf():
+    pdf.x = x
+    pdf.y = y
+    pdf.size = size
+    pdf.lineHeight = lineHeight
+    pdf.lineWidth = lineWidth
+    pdf.font = font
+    pdf.fontBold = fontBold
 
 def silentRemove(filePath):
     try:
-        print('hej')
         os.remove(filePath)
     except OSError as e:
         print ('Could not remove file: ' + filePath)
