@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Button, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
+import { Button, FormGroup, FormControl, ControlLabel, Modal } from "react-bootstrap";
 import { withRouter } from "react-router-dom";
 import NavBar from './../NavBar.jsx';
 import "./../css/Inputs.css";
@@ -19,13 +19,17 @@ class Input extends Component {
       datum : "",
       pumpStart :"",
       pumpSlut:"",
-      ovrigInfo:""
+      ovrigInfo:"",
+      show:false
     }
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleExit = this.handleExit.bind(this);
   }
 
-
+  handleExit(){
+    this.props.history.push('/');
+  }
 
   handleChange(e){
     this.setState({[e.target.id]: e.target.value});
@@ -53,7 +57,7 @@ class Input extends Component {
         this.props.history.push('/confirmationPage')
       }
       if(response.status === 404){
-        alert("NOT LOGGED IN")
+       this.setState({show:true})
       }
     })
   }
@@ -167,6 +171,26 @@ class Input extends Component {
           </Button>
       </form>
       <br/>
+      {/* IF NOT LOGGED IN */}
+      <Modal
+        show= {this.state.show}
+        onHide={this.handleClose}
+        container={this}
+        aria-labelledby="modal-container"
+        className="modal-container"
+        >
+          <Modal.Header closeButton>
+            <Modal.Title id="modal-container">
+              Ej inloggad
+            </Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+           Du måste logga in för att skicka fakturor.
+          </Modal.Body>
+          <Modal.Footer>
+            <Button onClick={this.handleExit}>Logga in</Button>
+          </Modal.Footer>
+        </Modal>
 
     </div>);
   }

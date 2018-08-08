@@ -10,19 +10,23 @@ class Settings extends Component{
 
     this.state = {
       email:"",
-      show:false
+      show:false,
+      showExit:false
     }
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleClose = this.handleClose.bind(this);
+    this.handleExit = this.handleClose.bind(this);
   }
 
   componentDidMount(){
     fetch(site + '/api/settings/user/',{
       credentials:'include'
     }).then(response => {
+      console.log(response.status)
       return response.json()}).then(result =>{
         this.setState({email: result[0].targetMail})
+        
       })
   }
 
@@ -33,6 +37,7 @@ class Settings extends Component{
   handleChange(e){
     this.setState({[e.target.id]: e.target.value});
   }
+  
   handleSubmit(e){
     e.preventDefault();
     fetch (site + '/api/settings/targetMail/',{
@@ -41,9 +46,22 @@ class Settings extends Component{
       body: JSON.stringify({
         email: this.state.email
       })
+    }).then(response => {
+      if(response.status === 201){
+        this.setState({show:true})
+      }
+      if(response.status === 400){
+        this.setState({showExit: true})
+      }
     })
   }
+  
 
+
+  //TODO: fixa så att den här fungerar också.
+  handleExit(){
+    this.props.history.push('/');
+  }
   handleClose(){
     this.setState({show: false})
   }
@@ -69,9 +87,9 @@ class Settings extends Component{
         bsSize="large"
         disabled={!this.validateForm()}
         type="submit"
-        onClick= {()=> this.setState({ show: true })}
         >Ändra
         </Button>
+        </form>
 
         <Modal
         show= {this.state.show}
@@ -94,7 +112,27 @@ class Settings extends Component{
           </Modal.Footer>
         </Modal>
 
-      </form>
+
+        <Modal
+        showExit= {this.state.showExit}
+        onHide={this.handleClose}
+        container={this}
+        aria-labelledby="modal-container"
+        className="modal-container"
+        >
+          <Modal.Header closeButton>
+            <Modal.Title id="modal-container">
+              Ej inloggad
+            </Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+           Du måste logga in för att skicka fakturor.
+          </Modal.Body>
+          <Modal.Footer>
+            <Button onClick={this.handleExit}>Logga in</Button>
+          </Modal.Footer>
+        </Modal>
+
     </div>
 
     )
