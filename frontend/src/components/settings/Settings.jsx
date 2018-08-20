@@ -58,7 +58,7 @@ class Settings extends Component{
       })
     }).then(response => {
       if(response.status === 201){
-        this.setState({showExit:true})
+        this.setState({show:true})
       }
       if(response.status === 400){
         this.setState({showExit: true})
@@ -78,8 +78,8 @@ class Settings extends Component{
     return(<div className="Settings">
       <br/>
       <NavBar/>
-      <p>Här kan du skriva in den mail som fakturan skall skickas till.</p>
-      <p>Just nu skickas fakturan till: <strong>{this.state.email}</strong></p>
+      <p>Här kan du skriva in den mail som följesedeln skall skickas till.</p>
+      <p>Just nu skickas följesedeln till: <strong>{this.state.email}</strong></p>
       <form onSubmit={this.handleSubmit}>
         <FormGroup controlId="email" bsSize="large">
           <ControlLabel>Email </ControlLabel>

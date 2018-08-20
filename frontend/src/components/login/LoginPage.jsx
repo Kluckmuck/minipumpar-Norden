@@ -12,7 +12,7 @@ class LoginPage extends Component{
           <Col xs={1} md={2}>
             </Col>
               <Col xs={10} md={8}>
-              <Header/>
+                  <Header/>
                   <Login/>
               </Col>
             <Col xs={1} md={2}>

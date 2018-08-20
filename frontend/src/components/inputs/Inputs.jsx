@@ -21,7 +21,8 @@ class Input extends Component {
       pumpStart :"",
       pumpSlut:"",
       ovrigInfo:"",
-      email:"",
+      kundmail:"",
+      aktuellEmail:"",
       show:false
     }
     this.handleChange = this.handleChange.bind(this);
@@ -42,7 +43,7 @@ class Input extends Component {
         }).then(response => {
            return response.json()
          }).then(result =>{
-            this.setState({email: result[0].targetMail})
+            this.setState({aktuellEmail: result[0].targetMail})
           })
       }
      })
@@ -63,7 +64,8 @@ class Input extends Component {
       method: 'POST',
       credentials: 'include',
       body: JSON.stringify({
-        namn:this.state.namn ,
+        namn:this.state.namn,
+        kundmail: this.state.kundmail,
         adress:this.state.adress,
         kontakt:this.state.kontakt,
         pumpMng:this.state.pumpMng,
@@ -89,7 +91,7 @@ class Input extends Component {
      
     })
   }
-
+  
   render() {
     return(
     <div className="Inputs">
@@ -101,6 +103,14 @@ class Input extends Component {
             <FormControl
             type="text"
             value={this.state.namn}
+            onChange={this.handleChange}
+            ></FormControl>
+        </FormGroup>
+        <FormGroup controlId="kundmail" bsSize="large">
+          <ControlLabel>Kundmail:</ControlLabel>
+            <FormControl
+            type="email"
+            value={this.state.kundmail}
             onChange={this.handleChange}
             ></FormControl>
         </FormGroup>
@@ -189,8 +199,6 @@ class Input extends Component {
             onChange={this.handleChange}
             ></FormControl>
         </FormGroup>
-        <br/>
-        <br/>
         <FormGroup controlId="ovrigInfo" bsSize="large">
           <ControlLabel>Övrigt:</ControlLabel>
             <FormControl
@@ -200,12 +208,16 @@ class Input extends Component {
             ></FormControl>
         </FormGroup>
         <br/>
-        <p>Fakturan skickas till <strong>{this.state.email}</strong></p>
+        <ul>
+          <li>Följesedeln skickas till: <strong>{this.state.aktuellEmail}</strong></li>
+          <li>Kopia skickas till: <strong>{this.state.kundmail}</strong></li>
+        </ul>
+        <br/>
         <Button
             block
             bsSize="large"
             type="submit"
-          >
+            >
             Skicka
           </Button>
       </form>
