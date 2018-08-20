@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import NavBar from "./../NavBar.jsx";
+import NavBar from "../NavBar";
 import {Button} from "react-bootstrap";
 import { withRouter } from "react-router-dom";
 import "./../css/ConfirmationPage.css"

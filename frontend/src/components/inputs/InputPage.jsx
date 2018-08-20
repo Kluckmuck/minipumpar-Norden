@@ -1,7 +1,8 @@
 import React, {Component} from "react";
-import Inputs from "./Inputs.jsx"
+import Inputs from "./Inputs"
 import{Grid,Row,Col} from "react-bootstrap"
 import { withRouter } from "react-router-dom";
+
 
 class InputPage extends Component{
 
@@ -13,6 +14,7 @@ class InputPage extends Component{
         <Col xs={1} md={2}>
           </Col>
             <Col xs={10} md={8}>
+
                 <Inputs/>
             </Col>
           <Col xs={1} md={2}>

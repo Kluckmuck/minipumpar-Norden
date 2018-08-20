@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Button, FormGroup, FormControl, ControlLabel, Modal } from "react-bootstrap";
 import { withRouter } from "react-router-dom";
-import NavBar from './../NavBar.jsx';
+import NavBar from '../NavBar';
 import "./../css/Inputs.css";
 
 var site  = 'http://maxjou.se:8000';
@@ -13,6 +13,7 @@ class Input extends Component {
       adress:"",
       kontakt :"",
       pumpMng: "",
+      slangStr:"",
       littNr: "",
       resTid: "",
       grundavgift :"",
@@ -20,6 +21,7 @@ class Input extends Component {
       pumpStart :"",
       pumpSlut:"",
       ovrigInfo:"",
+      email:"",
       show:false
     }
     this.handleChange = this.handleChange.bind(this);
@@ -27,14 +29,35 @@ class Input extends Component {
     this.handleExit = this.handleExit.bind(this);
   }
 
+  // * Get the email adress
+  componentDidMount(){
+    fetch(site + '/api/settings/user/',{
+      credentials:'include'
+    }).then(response => {
+      if(response.status === 404){
+        this.setState({showExit: true})
+      }else {
+        fetch(site + '/api/settings/user/',{
+          credentials:'include'
+        }).then(response => {
+           return response.json()
+         }).then(result =>{
+            this.setState({email: result[0].targetMail})
+          })
+      }
+     })
+    } 
+
   handleExit(){
     this.props.history.push('/');
   }
 
   handleChange(e){
     this.setState({[e.target.id]: e.target.value});
- }
- handleSubmit (event){
+  }
+
+  //* POST to backend.
+  handleSubmit (event){
     event.preventDefault();
     fetch (site + '/api/bokning/', {
       method: 'POST',
@@ -44,6 +67,7 @@ class Input extends Component {
         adress:this.state.adress,
         kontakt:this.state.kontakt,
         pumpMng:this.state.pumpMng,
+        slangStr: this.state.slangStr,
         littNr:this.state.littNr,
         resTid:this.state.resTid,
         grundavgift:this.state.grundavgift,
@@ -59,6 +83,10 @@ class Input extends Component {
       if(response.status === 404){
        this.setState({show:true})
       }
+      if(response.status === 400){
+        console.log(this.state.pumpMng);
+      }
+     
     })
   }
 
@@ -98,7 +126,16 @@ class Input extends Component {
           <ControlLabel>Pumpmängd:</ControlLabel>
             <FormControl
             type="number"
+            step="0.1"
             value={this.state.pumpMng}
+            onChange={this.handleChange}
+            ></FormControl>
+        </FormGroup>
+        <FormGroup controlId="slangStr" bsSize="large">
+          <ControlLabel>Slanglängd:</ControlLabel>
+            <FormControl
+            type="number"
+            value={this.state.slangStr}
             onChange={this.handleChange}
             ></FormControl>
         </FormGroup>
@@ -162,6 +199,8 @@ class Input extends Component {
             onChange={this.handleChange}
             ></FormControl>
         </FormGroup>
+        <br/>
+        <p>Fakturan skickas till <strong>{this.state.email}</strong></p>
         <Button
             block
             bsSize="large"

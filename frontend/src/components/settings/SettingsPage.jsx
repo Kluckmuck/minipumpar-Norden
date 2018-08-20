@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import Settings from "./Settings.jsx"
+import Settings from "./Settings"
 import{Grid,Row,Col} from "react-bootstrap"
 import { withRouter } from "react-router-dom";
 

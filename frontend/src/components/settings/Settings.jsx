@@ -1,7 +1,8 @@
 import React, {Component} from "react";
-import "./css/Settings.css"
+import "./../css/Settings.css"
 import { FormControl, ControlLabel, FormGroup, Button, Modal } from "react-bootstrap";
-import NavBar from "./NavBar.jsx";
+import NavBar from "./../NavBar";
+import { withRouter } from "react-router-dom";
 
 var site  = 'http://maxjou.se:8000';
 class Settings extends Component{
@@ -16,19 +17,28 @@ class Settings extends Component{
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleClose = this.handleClose.bind(this);
-    this.handleExit = this.handleClose.bind(this);
+    this.handleExit = this.handleExit.bind(this);
   }
-
+  //TODO: Get other mail aswell
+  //TODO:Check if user logged in.
   componentDidMount(){
-    fetch(site + '/api/settings/user/',{
-      credentials:'include'
-    }).then(response => {
-      console.log(response.status)
-      return response.json()}).then(result =>{
-        this.setState({email: result[0].targetMail})
-        
-      })
-  }
+  fetch(site + '/api/settings/user/',{
+    credentials:'include'
+  }).then(response => {
+    if(response.status === 404){
+      this.setState({showExit: true})
+    }else {
+      fetch(site + '/api/settings/user/',{
+        credentials:'include'
+      }).then(response => {
+         return response.json()
+       }).then(result =>{
+          this.setState({email: result[0].targetMail})
+        })
+    }
+   })
+  } 
+  
 
   validateForm(){
     return this.state.email.length > 0 && this.state.email.includes("@");
@@ -48,7 +58,7 @@ class Settings extends Component{
       })
     }).then(response => {
       if(response.status === 201){
-        this.setState({show:true})
+        this.setState({showExit:true})
       }
       if(response.status === 400){
         this.setState({showExit: true})
@@ -56,9 +66,6 @@ class Settings extends Component{
     })
   }
   
-
-
-  //TODO: fixa så att den här fungerar också.
   handleExit(){
     this.props.history.push('/');
   }
@@ -114,7 +121,7 @@ class Settings extends Component{
 
 
         <Modal
-        showExit= {this.state.showExit}
+        show= {this.state.showExit}
         onHide={this.handleClose}
         container={this}
         aria-labelledby="modal-container"
@@ -126,7 +133,7 @@ class Settings extends Component{
             </Modal.Title>
           </Modal.Header>
           <Modal.Body>
-           Du måste logga in för att skicka fakturor.
+           Du måste logga in för att ändra epostadress.
           </Modal.Body>
           <Modal.Footer>
             <Button onClick={this.handleExit}>Logga in</Button>
@@ -139,4 +146,4 @@ class Settings extends Component{
   }
 }
 
-export default Settings;
+export default withRouter(Settings);

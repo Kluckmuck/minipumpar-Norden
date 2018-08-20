@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import Confirmation from "./Confirmation.jsx"
+import Confirmation from "./Confirmation"
 import{Grid,Row,Col} from "react-bootstrap"
 import { withRouter } from "react-router-dom";
 

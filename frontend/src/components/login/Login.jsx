@@ -52,7 +52,7 @@ var site  = 'http://maxjou.se:8000';
   render() {
     return (
       <div className="Login">
-        <h1>Login</h1>
+        {/* <h1>Login</h1> */}
           <form onSubmit={this.handleSubmit}>
             <FormGroup controlId="username" bsSize="large">
               <ControlLabel>Email</ControlLabel>
