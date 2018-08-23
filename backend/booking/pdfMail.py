@@ -48,8 +48,8 @@ def pdfThenMail(bokning, kundmail=False):
 
         #Send mail to kundmail
         if kundmail is not False:
-            kundmail = Email(kundmail)
-            mail = Mail(from_email, subject, kundmail, content)
+            to_email = Email(kundmail)
+            mail = Mail(from_email, subject, to_email, content)
             mail.add_attachment(attachment)
             response = sg.client.mail.send.post(request_body=mail.get())
             content = Content("text/html", "<p>Det här mailet går ej att svara på.</p><p>Kopia skickades till: " + str(kundmail) + "</p><p>Vid frågor kan ni nå Älg IT på 070-656 68 05</p>")
@@ -57,11 +57,13 @@ def pdfThenMail(bokning, kundmail=False):
         #Send mail to targetMail
         to_email = Email(bokning.maskinist.profile.targetMail)
         to_email = Email('kluckmucki@gmail.com')
+        content = targetContentBuilder(bokning, kundmail)
         mail = Mail(from_email, subject, to_email, content)
         mail.add_attachment(attachment)
         response = sg.client.mail.send.post(request_body=mail.get())
         silentRemove(filePath)
     except Exception as e:
+        print(e)
         return e
     return True
 
@@ -157,3 +159,9 @@ def silentRemove(filePath):
     except OSError as e:
         print ('Could not remove file: ' + filePath)
         print(e)
+
+def targetContentBuilder(b, k):
+    print(k)
+    if k is not False:
+        return Content("text/html", "<p>Det här mailet går ej att svara på.</p><p>Kopia skickades till: " + str(k) + "</p><p>Vid frågor kan ni nå Älg IT på 070-656 68 05</p>")
+    return Content("text/html", "<p>Det här mailet går ej att svara på.</p><p>Vid frågor kan ni nå Älg IT på 070-656 68 05</p>")
