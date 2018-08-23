@@ -7,6 +7,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.core.validators import validate_email
 from django.views.decorators.csrf import ensure_csrf_cookie, csrf_exempt
+from django.core.exceptions import ValidationError
 
 from .models import Klient, KlientForm, Bokning, BokningForm
 from .pdfMail import pdfThenMail
