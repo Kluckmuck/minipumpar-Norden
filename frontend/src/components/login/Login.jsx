@@ -1,6 +1,7 @@
 import React, { Component } from "react";
-import { Button, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
+import { Button, FormGroup, FormControl, ControlLabel, Modal } from "react-bootstrap";
 import { withRouter } from "react-router-dom";
+
 import "./../css/Login.css";
 
 let header = new Headers({
@@ -16,11 +17,13 @@ var site  = 'http://maxjou.se:8000';
 
     this.state = {
       username: "test@test.se",
-      password: "test123123"
+      password: "test123123",
+      showExit:false
     };
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleClose = this.handleClose.bind(this);
   }
 
   validateForm () {
@@ -29,6 +32,9 @@ var site  = 'http://maxjou.se:8000';
 
   handleChange(e){
     this.setState({[e.target.id]: e.target.value});
+ }
+ handleClose(){
+  this.setState({showExit: false})
  }
 
   handleSubmit(event) {
@@ -45,13 +51,13 @@ var site  = 'http://maxjou.se:8000';
       if(response.status === 200){
       this.props.history.push('/inputs')
     }else if (response.status === 401){
-        alert("Ogiltligt användarnamn och/eller lösenord");
+      this.setState({showExit: true})
+      console.log(this.state.showExit)
       }
     })
   }
   render() {
-    return (
-      <div className="Login">
+    return (<div className="Login">
         {/* <h1>Login</h1> */}
           <form onSubmit={this.handleSubmit}>
             <FormGroup controlId="username" bsSize="large">
@@ -79,7 +85,27 @@ var site  = 'http://maxjou.se:8000';
             >
               Login
             </Button>
+
           </form>
+          <Modal
+              show= {this.state.showExit}
+              onHide={this.handleClose}
+              container={this}
+              aria-labelledby="modal-container"
+              className="modal-container"
+              >
+              <Modal.Header closeButton>
+                <Modal.Title id="modal-container">
+                  Felaktigt användarnamn/lösenord
+                </Modal.Title>
+              </Modal.Header>
+              <Modal.Body>
+                Du har angivit ett felaktigt användarnamn eller lösenord. 
+              </Modal.Body>
+              <Modal.Footer>
+                <Button onClick={this.handleClose}> Stäng</Button>
+              </Modal.Footer>
+        </Modal>
       </div>
   );
 }
