@@ -21,6 +21,7 @@ class PdfTestCase(TestCase):
     def setUpTestData(cls):
         klient = Klient.objects.create(namn='Bygga AB', adress='Betonggatan 24', kontakt='Erik Betongsson')
         user = User.objects.create_user(username='Korea', password='Seoul', email='bibimbap@gmail.com')
+        user.profile.targetMail = 'kluckmucki@gmail.com'
         bokning = Bokning.objects.create(
             klient=klient,
             pumpMng='20',
@@ -72,6 +73,23 @@ class PdfTestCase(TestCase):
         #Create two PDFs. Test if they both look ok!
         createPdf(Bokning.objects.get(id=1))
         createPdf(Bokning.objects.get(id=2))
+
+    def test_pdfBokningTwoMail(self):
+        login_auth(self) #Login för @login_required
+        response = self.client.post('/api/bokning/', json.dumps({
+            'namn': '  Bygga Mer HB   ',
+            'adress':'Vasagatan 17    ',
+            'kontakt' :'Karl Karlsson',
+            'pumpMng': '15',
+            'littNr': '134 5C',
+            'resTid': '2',
+            'grundavgift' : '3000',
+            'datum' : '2018-02-17',
+            'pumpStart' : '12:00',
+            'pumpSlut' : '16:45',
+            'kundmail' : 'viktor.karl.lundberg@gmail.com'
+        }), content_type='application/json')
+        self.assertEqual(response.status_code, 201)
 
 def login_auth(self):
     self.client.post('/api/login/', json.dumps({'username': 'Korea', 'password': 'Seoul'}), content_type='application/json')

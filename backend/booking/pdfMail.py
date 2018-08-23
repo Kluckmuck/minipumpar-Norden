@@ -23,7 +23,7 @@ fontBold = 'Helvetica-Bold'
 pdf = Pdf(x, y, size, lineHeight, lineWidth, font, fontBold)
 
 
-def pdfThenMail(bokning):
+def pdfThenMail(bokning, kundmail=False):
     filePath = createPdf(bokning) #Create PDF, returns filepath
     try:
         with open(filePath, 'rb') as f:
@@ -43,13 +43,24 @@ def pdfThenMail(bokning):
         sg = sendgrid.SendGridAPIClient(apikey=os.environ.get('SENDGRID_API_KEY'))
         from_email = Email("service@algit.se")
         subject = bokning.__str__()
-        to_email = Email(bokning.maskinist.profile.targetMail)
+
         content = Content("text/html", "<p>Det här mailet går ej att svara på.</p><p>Vid frågor kan ni nå Älg IT på 070-656 68 05</p>")
 
+        #Send mail to kundmail
+        if kundmail is not False:
+            to_email = Email(kundmail)
+            mail = Mail(from_email, subject, to_email, content)
+            mail.add_attachment(attachment)
+            response = sg.client.mail.send.post(request_body=mail.get())
+            content = Content("text/html", "<p>Det här mailet går ej att svara på.</p><p>Kopia skickades till: " + str(kundmail) + "</p><p>Vid frågor kan ni nå Älg IT på 070-656 68 05</p>")
+
+        #Send mail to targetMail
+        to_email = Email(bokning.maskinist.profile.targetMail)
+        to_email = Email('kluckmucki@gmail.com')
+        content = targetContentBuilder(bokning, kundmail)
         mail = Mail(from_email, subject, to_email, content)
         mail.add_attachment(attachment)
         response = sg.client.mail.send.post(request_body=mail.get())
-
         silentRemove(filePath)
     except Exception as e:
         return e
@@ -147,3 +158,8 @@ def silentRemove(filePath):
     except OSError as e:
         print ('Could not remove file: ' + filePath)
         print(e)
+
+def targetContentBuilder(b, k):
+    if k is not False:
+        return Content("text/html", "<p>Det här mailet går ej att svara på.</p><p>Kopia skickades till: " + str(k) + "</p><p>Vid frågor kan ni nå Älg IT på 070-656 68 05</p>")
+    return Content("text/html", "<p>Det här mailet går ej att svara på.</p><p>Vid frågor kan ni nå Älg IT på 070-656 68 05</p>")
