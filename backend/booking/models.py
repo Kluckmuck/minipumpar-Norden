@@ -18,7 +18,7 @@ class Klient(models.Model):
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    targetMail = models.EmailField(default='info@minipumpar.se')
+    targetMail = models.EmailField(default='')
 
 @receiver(post_save, sender=User)
 def create_user_profile(sender, instance, created, **kwargs):

@@ -5,6 +5,7 @@ from django.utils import timezone
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
+from django.core.validators import validate_email
 from django.views.decorators.csrf import ensure_csrf_cookie, csrf_exempt
 
 from .models import Klient, KlientForm, Bokning, BokningForm
@@ -44,7 +45,6 @@ def bokning(request):
         if klientForm.is_valid() and bokningForm.is_valid():
             #Skriv till db.
             namn = json.loads(request.body.decode())['namn'].strip()
-            #user = json.loads(request.body.decode())['maskinist'].strip()
             user = request.user
             # Se om en instans av Klient finns i DB
             query = Klient.objects.filter(namn=namn)
@@ -64,7 +64,17 @@ def bokning(request):
             bokning.klient = klient
             bokning.maskinist = user
             bokning.save()
-            val = pdfThenMail(bokning)
+            try:
+                kundmail = json.loads(request.body.decode())['kundmail'].strip()
+                try:
+                    #Send mail to customer if valid
+                    validate_email(kundmail)
+                    val = pdfThenMail(bokning, kundmail)
+                except ValidationError as e:
+                    return HttpResponseBadRequest(json.dumps({'error': 'Invalid request: {0}'.format(str(e))}), content_type="application/json")
+            except KeyError:
+                #Only send to target
+                val = pdfThenMail(bokning)
             if val == True:
                 return HttpResponse(status=201)
             else:
