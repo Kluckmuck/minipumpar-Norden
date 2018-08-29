@@ -14,7 +14,6 @@ class InputPage extends Component{
         <Col xs={1} md={2}>
           </Col>
             <Col xs={10} md={8}>
-
                 <Inputs/>
             </Col>
           <Col xs={1} md={2}>

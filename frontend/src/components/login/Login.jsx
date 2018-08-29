@@ -4,12 +4,12 @@ import { withRouter } from "react-router-dom";
 
 import "./../css/Login.css";
 
+var site  = 'http://maxjou.se:8000';
 let header = new Headers({
   "Content-Type": "application/json; charset=utf-8",
   "Access-Control-Request-Headers": "*",
   "Access-Control-Allow-Methods": "GET, POST, HEAD, OPTIONS, PUT, DELETE, PATCH",
 });
-var site  = 'http://maxjou.se:8000';
 
  class Login extends Component{
   constructor(props) {

@@ -11,6 +11,7 @@ class Settings extends Component{
 
     this.state = {
       email:"",
+      extraEmail:"",
       show:false,
       showExit:false
     }
