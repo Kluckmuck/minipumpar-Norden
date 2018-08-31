@@ -1,0 +1,36 @@
+@media all and (min-width: 480px) {
+    .WayBill {
+      padding: 60px 0;
+    }
+  
+    .WayBill form {
+      margin: 0 auto;
+      max-width: 320px;
+    }
+  
+    .WayBill h1 {
+      margin: 50px auto;
+      padding: 80 px;
+      max-width: 320px;
+    }
+    .WayBill p {
+      margin: 50px auto;
+      padding: 80 px;
+      max-width: 320px;
+    }
+  
+   
+    .modal-container {
+      /* position: relative;
+      widows: 50px; */
+    }
+    .modal-container .modal, .modal-container .modal-backdrop {
+      /* position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) !important; */
+    }
+  
+  
+    
+  }

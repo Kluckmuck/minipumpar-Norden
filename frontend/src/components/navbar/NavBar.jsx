@@ -19,11 +19,14 @@ import "./NavBar.css";
                <LinkContainer to="/inputs">
                  <NavItem eventKey={1}><FaTasks className="NavBarIcon" /> Ny bokning</NavItem>
                </LinkContainer>
+               <LinkContainer to="/waybill">
+                 <NavItem eventKey={2}><FaTasks className="NavBarIcon" /> Följesedlar</NavItem>
+               </LinkContainer>
                 <LinkContainer to="/settings">
-                  <NavItem eventKey={2}><FaCogs className="NavBarIcon" /> Inställningar</NavItem>
+                  <NavItem eventKey={3}><FaCogs className="NavBarIcon" /> Inställningar</NavItem>
                 </LinkContainer>
                 <LinkContainer to="/">
-                  <NavItem eventKey={3}><FaSignOutAlt className="NavBarIcon" /> Logga ut</NavItem>
+                  <NavItem eventKey={4}><FaSignOutAlt className="NavBarIcon" /> Logga ut</NavItem>
                 </LinkContainer>
               </Nav>
              </Navbar.Collapse>
