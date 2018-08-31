@@ -1,8 +1,8 @@
 import React, {Component} from "react";
-import NavBar from "../NavBar";
+import NavBar from "../navbar/NavBar";
 import {Button} from "react-bootstrap";
 import { withRouter } from "react-router-dom";
-import "./../css/ConfirmationPage.css"
+import "./ConfirmationPage.css"
 
 
 var site  = 'http://maxjou.se:8000';

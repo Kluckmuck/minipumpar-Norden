@@ -2,7 +2,7 @@ import React, {Component} from "react";
 import Login from "./Login"
 import{Grid,Row,Col} from "react-bootstrap"
 import { withRouter } from "react-router-dom";
-import Header from "../images/Header"
+import Header from "../header/Header"
 class LoginPage extends Component{
 
   render(){
