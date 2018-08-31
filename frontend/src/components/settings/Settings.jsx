@@ -1,7 +1,7 @@
 import React, {Component} from "react";
-import "./../css/Settings.css"
+import "./Settings.css"
 import { FormControl, ControlLabel, FormGroup, Button, Modal } from "react-bootstrap";
-import NavBar from "./../NavBar";
+import NavBar from "../navbar/NavBar";
 import { withRouter } from "react-router-dom";
 
 var site  = 'http://maxjou.se:8000';

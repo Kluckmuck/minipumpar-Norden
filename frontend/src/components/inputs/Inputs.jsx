@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import { Button, FormGroup, FormControl, ControlLabel, Modal } from "react-bootstrap";
 import { withRouter } from "react-router-dom";
-import NavBar from '../NavBar';
-import "./../css/Inputs.css";
+import NavBar from '../navbar/NavBar';
+import "./Inputs.css";
 
 var site  = 'http://maxjou.se:8000';
 class Input extends Component {

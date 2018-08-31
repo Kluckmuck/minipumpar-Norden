@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Button, FormGroup, FormControl, ControlLabel, Modal } from "react-bootstrap";
 import { withRouter } from "react-router-dom";
 
-import "./../css/Login.css";
+import "./Login.css";
 
 var site  = 'http://maxjou.se:8000';
 let header = new Headers({
