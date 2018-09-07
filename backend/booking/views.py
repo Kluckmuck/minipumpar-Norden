@@ -83,6 +83,15 @@ def bokning(request):
         else:
             print(bokningForm.errors)
             return HttpResponse(status=400)
+    elif request.method == 'GET':
+        # Hitta User
+        print('OK')
+        try:
+            user = getUser(request)
+        except ValueError as e:
+            return HttpResponseNotFound(e)
+        return JsonResponse(list(Bokning.objects.filter(maskinist=user).order_by('-id')[:10].values()), safe=False)
+        return JsonResponse(list(Event.objects.all().filter(product=p_id).values()), safe=False)
     else:
         return HttpResponseNotAllowed(['POST'])
 
@@ -116,3 +125,14 @@ def token(request):
         return HttpResponse(status=204)
     else:
         return HttpResponseNotAllowed(['GET'])
+
+def getUser(request):
+    user = request.user
+    try:
+        user = User.objects.get(username=user)
+    except User.DoesNotExist:
+        try:
+            user = User.objects.get(email=user)
+        except User.DoesNotExist:
+            raise ValueError('<h1>User not found</h1>')
+    return user

@@ -17,7 +17,7 @@ class BokningTestCase(TestCase):
     def setUpTestData(cls):
         klient = Klient.objects.create(namn='Bygga AB', adress='Betonggatan 24', kontakt='Erik Betongsson')
         klient.save()
-        user = User.objects.create_user(username='Korea', password='Seoul', email='bibimbap@gmail.com', targetMail='kluckmucki@gmail.com')
+        user = User.objects.create_user(username='Korea', password='Seoul', email='bibimbap@gmail.com')
         User.objects.create_user(username='Viktor', password='Max')
         bokning = Bokning.objects.create(
             klient=klient,
@@ -135,6 +135,12 @@ class BokningTestCase(TestCase):
         #Testar att klient 3 inte existerar
         response = self.client.get('/api/klient/3/')
         self.assertEqual(response.status_code, 404)
+
+    def test_getLatestBoknings(self):
+        login_auth(self) #Login för @login_required
+        response = self.client.get('/api/bokning/')
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.body, 'Hej')
 
 def login_auth(self):
     self.client.post('/api/login/', json.dumps({'username': 'Korea', 'password': 'Seoul'}), content_type='application/json')
