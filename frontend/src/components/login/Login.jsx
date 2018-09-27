@@ -15,8 +15,8 @@ var site  = 'http://maxjou.se:8000';
     super(props);
 
     this.state = {
-      username: "test@test.se",
-      password: "test123123"
+      username: "",
+      password: ""
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -58,7 +58,7 @@ var site  = 'http://maxjou.se:8000';
               <ControlLabel>Email</ControlLabel>
               <FormControl
                 autoFocus
-                type="email"
+                type="text"
                 value={this.state.username}
                 onChange={this.handleChange}
               />
