@@ -156,8 +156,6 @@ def drawFields(c, bokning):
             c.setFont(fontBold, size)
             c.drawString(pdf.x,pdf.y,fields[i].title() + ':')
         value = getattr(bokning,fields[i])
-        if fields[i] is 'grundavgift':
-            value = str(value) + ' kr'
         if fields[i] is 'resTid':
             value = str(value) + ' timmar'
         if fields[i] is 'pumpMng':
