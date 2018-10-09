@@ -1,7 +1,8 @@
 import React, {Component }from "react";
 import { Navbar, Nav, NavItem} from "react-bootstrap";
 import { LinkContainer } from 'react-router-bootstrap';
-import { FaSignOutAlt, FaCogs, FaTasks } from 'react-icons/fa';
+import { FaSignOutAlt, FaCogs, FaTasks, FaArchive } from 'react-icons/fa';
+// import {archive} from 'react-icons-kit/fa/archive'
 import "./NavBar.css";
 
 
@@ -20,7 +21,7 @@ import "./NavBar.css";
                  <NavItem eventKey={1}><FaTasks className="NavBarIcon" /> Ny bokning</NavItem>
                </LinkContainer>
                <LinkContainer to="/waybill">
-                 <NavItem eventKey={2}><FaTasks className="NavBarIcon" /> Följesedlar</NavItem>
+                 <NavItem eventKey={2}><FaArchive className="NavBarIcon" /> Följesedlar</NavItem>
                </LinkContainer>
                 <LinkContainer to="/settings">
                   <NavItem eventKey={3}><FaCogs className="NavBarIcon" /> Inställningar</NavItem>
@@ -33,4 +34,6 @@ import "./NavBar.css";
            </Navbar>
     }
 }
+
+<i class="fas fa-archive"></i>
 export default NavBar;

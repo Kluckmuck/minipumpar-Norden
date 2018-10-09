@@ -1,19 +1,19 @@
 @media all and (min-width: 480px) {
-    .WayBill {
+    .Waybill {
       padding: 60px 0;
     }
   
-    .WayBill form {
+    .Waybill form {
       margin: 0 auto;
       max-width: 320px;
     }
   
-    .WayBill h1 {
+    .Waybill h1 {
       margin: 50px auto;
       padding: 80 px;
       max-width: 320px;
     }
-    .WayBill p {
+    .Waybill p {
       margin: 50px auto;
       padding: 80 px;
       max-width: 320px;
